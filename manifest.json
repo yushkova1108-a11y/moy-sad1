@@ -2,11 +2,11 @@
   "name": "Мой Сад · 21 день",
   "short_name": "Мой Сад",
   "description": "Челлендж для поиска себя. Выращивай своё дерево.",
-  "start_url": "/moy-sad/",
-  "scope": "/moy-sad/",
+  "start_url": "/moy-sad1/",
+  "scope": "/moy-sad1/",
   "display": "standalone",
-  "background_color": "#0c1a0c",
-  "theme_color": "#0c1a0c",
+  "background_color": "#0a160a",
+  "theme_color": "#0a160a",
   "orientation": "portrait",
   "icons": [
     {
