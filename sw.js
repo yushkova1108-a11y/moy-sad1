@@ -1,5 +1,5 @@
-const CACHE = 'mysad-v3';
-const BASE = '/moy-sad/';
+const CACHE = 'mysad-v4';
+const BASE = '/moy-sad1/';
 const FILES = [
   BASE,
   BASE + 'index.html',
