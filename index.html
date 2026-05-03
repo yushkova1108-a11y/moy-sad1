@@ -13,180 +13,133 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-
-/* ТЁМНАЯ ТЕМА (по умолчанию) */
 :root{
-  --bg:#0a160a;--surf:#111d11;--card:#162016;--brd:#254025;
-  --gr:#5fcc66;--gd:#3a7a40;--gold:#e0bb5a;--goldd:#9a7c30;
-  --cr:#f0e8cc;--tx:#c8e0b8;--dm:#7aaa6a;--br:#8a5f32;
+  --bg:#0c1a0c;--surf:#101e10;--card:#152015;--brd:#1c301c;
+  --gr:#4aaa50;--gd:#2a5e30;--gold:#c8a84a;--goldd:#7a6020;
+  --cr:#e8d8b0;--tx:#8aaa78;--dm:#3a5a3a;--br:#7a4f2a;
   --sb:env(safe-area-inset-bottom,16px);
-  --fs-xs:12px;--fs-sm:15px;--fs-md:17px;--fs-lg:20px;--fs-xl:26px;--fs-2xl:36px;--fs-3xl:48px;
 }
-
-/* СВЕТЛАЯ ТЕМА */
-@media(prefers-color-scheme:light){
-  :root{
-    --bg:#f4f7f0;--surf:#e8ede4;--card:#ffffff;--brd:#c8d8c0;
-    --gr:#2a7a30;--gd:#1a5a20;--gold:#8a6010;--goldd:#6a4808;
-    --cr:#1a2a1a;--tx:#2a3a2a;--dm:#5a7a50;--br:#7a4a20;
-  }
-}
-
-html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;font-weight:400;overflow:hidden;font-size:var(--fs-md);line-height:1.5;-webkit-font-smoothing:antialiased}
-.screen{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .25s ease;padding-bottom:calc(72px + var(--sb))}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Jost',sans-serif;font-weight:300;overflow:hidden}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .25s ease;padding-bottom:calc(64px + var(--sb))}
 .screen.active{opacity:1;pointer-events:all}
 .screen.nonav{padding-bottom:0}
 .scrl{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .scrl::-webkit-scrollbar{display:none}
+
 /* WELCOME */
 #sw{align-items:center;justify-content:center}
 #sw .scrl{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:40px 28px;text-align:center}
-.wtree{width:160px;height:180px;margin:0 auto 16px}
-.wtitle{font-family:-apple-system,BlinkMacSystemFont,serif;font-size:52px;font-weight:600;color:var(--cr);line-height:.95;margin-bottom:6px}
-.wtitle em{color:var(--gr);font-style:normal}
+.wtree{width:180px;height:200px;margin:0 auto 16px}
+.wtitle{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:300;color:var(--cr);line-height:.88;margin-bottom:6px}
+.wtitle em{color:var(--gr);font-style:italic}
 .wline{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--gd),transparent);margin:16px auto}
-.wsub{font-size:16px;color:var(--tx);line-height:1.7;margin-bottom:32px;max-width:280px}
-.nlbl{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);margin-bottom:8px;display:block;text-align:left;width:100%;max-width:300px;font-weight:600}
-.ninp{width:100%;max-width:300px;background:var(--card);border:2px solid var(--brd);color:var(--cr);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:22px;font-weight:500;padding:14px 18px;border-radius:10px;outline:none;transition:border-color .2s;margin-bottom:16px}
+.wsub{font-size:14px;color:var(--dm);line-height:1.7;margin-bottom:32px;max-width:250px}
+.nlbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--dm);margin-bottom:8px;display:block;text-align:left;width:100%;max-width:300px}
+.ninp{width:100%;max-width:300px;background:var(--card);border:1px solid var(--brd);color:var(--cr);font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;padding:14px 18px;border-radius:6px;outline:none;transition:border-color .2s;margin-bottom:16px}
 .ninp:focus{border-color:var(--gd)}.ninp::placeholder{color:var(--dm)}
-.btnp{background:var(--gd);border:none;color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:17px 32px;border-radius:12px;cursor:pointer;width:100%;max-width:300px;transition:background .2s}
+.btnp{background:var(--gd);border:none;color:var(--cr);font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;padding:16px 32px;border-radius:6px;cursor:pointer;width:100%;max-width:300px;transition:background .2s}
 .btnp:hover{background:var(--gr)}.btnp:disabled{opacity:.35;cursor:not-allowed}
+
 /* HOME */
 .hdr{padding:18px 20px 0;display:flex;align-items:flex-start;justify-content:space-between}
-.hname{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:26px;font-weight:700;color:var(--cr)}
-.hdlbl{font-size:12px;letter-spacing:1px;color:var(--dm);text-transform:uppercase;margin-bottom:2px;font-weight:600}
+.hname{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--cr)}
+.hdlbl{font-size:10px;letter-spacing:2px;color:var(--dm);text-transform:uppercase;margin-bottom:2px}
 .hdbadge{background:var(--card);border:1px solid var(--brd);border-radius:20px;padding:6px 14px;text-align:center}
-.hdbadge span{color:var(--gold);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:22px;display:block;line-height:1;font-weight:700}
-.hdbadge small{font-size:13px;color:var(--dm);letter-spacing:0}
-.treewrap{width:100%;max-width:280px;margin:4px auto 0;aspect-ratio:13/16}
-.wmsg{background:rgba(160,100,20,.15);border:1px solid rgba(180,120,30,.4);border-radius:10px;padding:14px 16px;margin:0 16px 8px;font-size:15px;color:#d0a050;line-height:1.55;display:none}
+.hdbadge span{color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:20px;display:block;line-height:1}
+.hdbadge small{font-size:10px;color:var(--dm);letter-spacing:1px}
+.treewrap{width:100%;max-width:300px;margin:4px auto 0;aspect-ratio:13/16}
+.wmsg{background:rgba(160,100,20,.1);border:1px solid rgba(180,120,30,.25);border-radius:8px;padding:14px 16px;margin:0 16px 8px;font-size:13px;color:#b89050;line-height:1.55;display:none}
 .wmsg.show{display:block}
-.retbanner{background:rgba(94,60,20,.2);border:1px solid rgba(140,90,30,.5);border-radius:10px;padding:14px 16px;margin:0 16px 8px;font-size:15px;color:#d8b070;line-height:1.5;cursor:pointer;display:none;font-weight:500}
-.retbanner.show{display:flex;align-items:center;gap:10px}
-.retbanner span{flex:1}
 .psec{padding:6px 20px 10px}
 .prow{display:flex;align-items:center;gap:12px;margin-bottom:4px}
-.plbl{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);white-space:nowrap;font-weight:600}
+.plbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dm);white-space:nowrap}
 .pbar{flex:1;height:2px;background:var(--brd);border-radius:2px}
 .pfill{height:100%;background:linear-gradient(90deg,var(--gd),var(--gr));border-radius:2px;transition:width .7s ease}
-.pnum{font-size:20px;font-weight:700;color:var(--gr);white-space:nowrap}
-.sname{font-size:16px;font-weight:500;color:var(--tx);text-align:center;margin-bottom:3px}
-.timer{text-align:center;font-size:13px;letter-spacing:0;color:var(--dm);margin-bottom:12px}
-.tcrd{margin:0 16px 12px;background:var(--card);border:2px solid var(--brd);border-radius:14px;padding:18px;cursor:pointer;transition:border-color .2s,background .2s}
+.pnum{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gr);white-space:nowrap}
+.sname{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--dm);text-align:center;margin-bottom:3px}
+.timer{text-align:center;font-size:11px;letter-spacing:.5px;color:var(--dm);margin-bottom:12px}
+.tcrd{margin:0 16px 12px;background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:18px;cursor:pointer;transition:border-color .2s,background .2s}
 .tcrd:active{background:var(--surf)}.tcrd.dc{border-color:var(--gd);background:rgba(30,60,30,.4)}
 .tctop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.tclbl{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);font-weight:600}
+.tclbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--dm)}
 .tcchk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--brd);display:flex;align-items:center;justify-content:center;transition:all .2s}
 .tcchk.on{background:var(--gd);border-color:var(--gd)}
-.tctit{font-size:22px;font-weight:700;color:var(--cr);margin-bottom:4px}
-.tcprev{font-size:15px;color:var(--tx);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tctit{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cr);margin-bottom:4px}
+.tcprev{font-size:13px;color:var(--dm);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
 /* TASK */
 .thdr{padding:14px 16px 12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--brd);flex-shrink:0}
 .bbtn{background:none;border:none;color:var(--dm);cursor:pointer;padding:4px;display:flex;align-items:center}
-.tdn{font-size:38px;font-weight:700;color:var(--dm);line-height:1;flex-shrink:0}
-.thi{flex:1}.twkl{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);margin-bottom:2px;font-weight:600}
-.ttit{font-size:22px;font-weight:700;color:var(--cr);line-height:1.2}
+.tdn{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--dm);line-height:1;flex-shrink:0}
+.thi{flex:1}.twkl{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dm);margin-bottom:2px}
+.ttit{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--cr);line-height:1.1}
 .tbody{padding:20px}
-.smyslbox{background:var(--surf);border-radius:10px;border-left:3px solid var(--gold);padding:16px;margin-bottom:18px;font-size:15px;color:var(--tx);line-height:1.65}
-.techcard{background:var(--card);border:2px solid var(--brd);border-radius:14px;margin-bottom:14px;overflow:hidden}
-.techcard.main{border-color:var(--gr)}
-.techhdr{padding:14px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.techtag{font-size:11px;letter-spacing:.5px;text-transform:uppercase;padding:4px 10px;border-radius:10px;background:var(--surf);color:var(--dm);white-space:nowrap;margin-top:3px;font-weight:600}
-.techcard.main .techtag{background:rgba(42,94,48,.35);color:var(--gr)}
-.techname{font-size:18px;font-weight:700;color:var(--cr);line-height:1.2;margin-bottom:4px}
-.techwhy{font-size:14px;color:var(--tx);line-height:1.55;padding:0 16px 10px}
-.techsteps{padding:0 16px 14px;display:none}
-.techsteps.open{display:block}
-.steprow{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
-.stepnum{width:20px;height:20px;border-radius:50%;background:var(--gd);color:var(--cr);font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.steptext{font-size:15px;color:var(--tx);line-height:1.55}
-.showsteps{background:none;border:none;color:var(--gr);font-size:14px;font-weight:600;letter-spacing:0;cursor:pointer;padding:4px 16px 14px;display:flex;align-items:center;gap:6px}
-.notesec{margin-top:6px}
-.notelbl{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);margin-bottom:8px;display:block;font-weight:600}
-.narea{width:100%;min-height:100px;background:var(--card);border:2px solid var(--brd);border-radius:10px;color:var(--cr);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;font-weight:400;padding:14px;resize:none;outline:none;transition:border-color .2s;line-height:1.6}
+.ttxt{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--cr);line-height:1.58;margin-bottom:14px}
+.twhy{font-size:13px;color:var(--dm);line-height:1.65;padding:14px 16px;background:var(--surf);border-radius:6px;border-left:2px solid var(--gd);margin-bottom:20px;font-style:italic}
+.nlbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--dm);margin-bottom:8px;display:block}
+.narea{width:100%;min-height:110px;background:var(--card);border:1px solid var(--brd);border-radius:6px;color:var(--cr);font-family:'Jost',sans-serif;font-size:15px;font-weight:300;padding:14px;resize:none;outline:none;transition:border-color .2s;line-height:1.55}
 .narea:focus{border-color:var(--gd)}.narea::placeholder{color:var(--dm)}
-.cbtn{width:100%;background:var(--gd);border:none;color:#ffffff;font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:17px;border-radius:12px;cursor:pointer;margin-top:14px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.cbtn:hover{background:var(--gr)}.cbtn.done{background:rgba(30,80,30,.3);border:2px solid var(--gd);color:var(--gr)}
+.cbtn{width:100%;background:var(--gd);border:none;color:var(--cr);font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px;border-radius:6px;cursor:pointer;margin-top:14px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.cbtn:hover{background:var(--gr)}.cbtn.done{background:rgba(30,60,30,.5);border:1px solid var(--gd);color:var(--gr)}
+
 /* DAYS */
 .dhdr{padding:18px 20px 12px;border-bottom:1px solid var(--brd);flex-shrink:0}
-.stit{font-size:30px;font-weight:700;color:var(--cr)}
+.stit{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--cr)}
 .wsec{padding:0 16px}
-.wlbl{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);padding:16px 4px 8px;display:block;font-weight:700}
+.wlbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--dm);padding:14px 4px 8px;display:block}
 .drow{display:flex;align-items:center;gap:14px;padding:13px 4px;border-bottom:1px solid var(--brd);cursor:pointer;border-radius:4px;transition:background .15s}
 .drow:active{background:var(--surf)}
-.drn{font-size:24px;font-weight:700;color:var(--dm);width:36px;text-align:center;flex-shrink:0}
+.drn{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--dm);width:36px;text-align:center;flex-shrink:0}
 .dri{flex:1;min-width:0}
-.drt{font-size:17px;font-weight:600;color:var(--cr);line-height:1.25;margin-bottom:3px}
-.drp{font-size:14px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drt{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--cr);line-height:1.15;margin-bottom:2px}
+.drp{font-size:12px;color:var(--dm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .drck{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--brd);flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .drck.on{background:var(--gd);border-color:var(--gd)}
 .drow.lk{opacity:.3;cursor:default}.drow.lk:active{background:transparent}
 .drow.d1 .drn{color:#7a5030}.drow.d2 .drn{color:#306050}.drow.d3 .drn{color:#5a3080}
-/* FEELINGS */
-.fhdr{padding:18px 20px 12px;border-bottom:1px solid var(--brd);flex-shrink:0}
-.fempty{text-align:center;padding:48px 32px;font-size:16px;color:var(--tx);line-height:1.7}
-.fempty big{font-size:48px;display:block;margin-bottom:12px}
-.fweek{padding:16px 20px 8px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);font-weight:700}
-.fentry{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--brd);cursor:pointer}
-.fentry:active{background:var(--surf)}
-.femo{font-size:24px;width:36px;text-align:center;flex-shrink:0}
-.fword{font-size:18px;font-weight:600;color:var(--cr);flex:1}
-.fdate{font-size:13px;color:var(--dm)}
-.fcloud{padding:16px 20px;display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--brd);margin-bottom:4px}
-.fcltag{padding:6px 14px;border-radius:20px;border:1px solid var(--brd);font-size:13px;color:var(--tx);cursor:pointer;transition:all .2s}
-.fcltag:active{border-color:var(--gd);color:var(--gr)}
-/* FEELING CARD */
-.fcard{padding:0}
-.fctop{padding:24px 24px 18px;border-bottom:1px solid var(--brd)}
-.fcemo{font-size:48px;margin-bottom:8px;display:block}
-.fcname{font-size:28px;font-weight:700;color:var(--cr);margin-bottom:6px}
-.fcshort{font-size:16px;color:var(--tx);line-height:1.6}
-.fcsec{padding:16px 24px;border-bottom:1px solid var(--brd)}
-.fcslbl{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);margin-bottom:8px;font-weight:700}
-.fcstext{font-size:15px;color:var(--tx);line-height:1.6}
-.fcstep{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
-.fcstepnum{width:22px;height:22px;border-radius:50%;background:rgba(42,94,48,.4);color:var(--gr);font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.fcstuck{background:rgba(94,60,20,.2);border:1px solid rgba(140,90,30,.5);border-radius:10px;padding:16px;margin:16px 24px;font-size:15px;color:#e0b870;line-height:1.55}
-.fcstuck strong{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;color:#d0a050;font-weight:700}
+
 /* GARDEN */
 .ghdr{padding:18px 20px 12px;border-bottom:1px solid var(--brd);flex-shrink:0;display:flex;align-items:flex-end;justify-content:space-between}
-.addbtn{background:none;border:2px solid var(--brd);color:var(--tx);font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:9px 16px;border-radius:10px;cursor:pointer;transition:all .2s}
+.addbtn{background:none;border:1px solid var(--brd);color:var(--dm);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:8px 14px;border-radius:4px;cursor:pointer;transition:all .2s}
 .addbtn:hover{border-color:var(--gd);color:var(--gr)}
 .ggrid{padding:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .gtc{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:14px 10px 12px;text-align:center}
 .gtc.me{border-color:var(--gd)}
 .gtsvg{width:100%;aspect-ratio:3/4;margin-bottom:8px}
-.gtnm{font-size:16px;font-weight:700;color:var(--cr);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gtst{font-size:13px;color:var(--tx)}
-.mkcbtn{margin:8px 16px 0;background:none;border:2px solid var(--brd);color:var(--tx);font-size:14px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:14px;border-radius:10px;cursor:pointer;width:calc(100% - 32px);transition:all .2s}
+.gtnm{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--cr);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gtst{font-size:10px;color:var(--dm)}
+.mkcbtn{margin:8px 16px 0;background:none;border:1px solid var(--brd);color:var(--dm);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:12px;border-radius:4px;cursor:pointer;width:calc(100% - 32px);transition:all .2s}
 .mkcbtn:hover{border-color:var(--goldd);color:var(--gold)}
-/* NAV — 4 items */
+
+/* NAV */
 #nav{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--brd);display:none;padding-bottom:var(--sb)}
 #nav.vis{display:flex}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;background:none;border:none;cursor:pointer;gap:4px}
-.ni{font-size:22px;line-height:1}.nl{font-size:11px;letter-spacing:.3px;color:var(--dm);text-transform:uppercase;font-weight:500}
-.nb.act .nl{color:var(--gr);font-weight:700}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px;background:none;border:none;cursor:pointer;gap:3px}
+.ni{font-size:20px;line-height:1}.nl{font-size:9px;letter-spacing:1.5px;color:var(--dm);text-transform:uppercase}
+.nb.act .nl{color:var(--gr)}
+
 /* MODAL */
 .mbg{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:flex-end;justify-content:center;z-index:100;padding-bottom:var(--sb)}
 .mbg.open{display:flex}
-.mbox{background:var(--card);border:1px solid var(--brd);border-radius:14px 14px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto}
-.mpad{padding:28px 24px 32px}
-.mtit{font-size:22px;font-weight:700;color:var(--cr);margin-bottom:8px}
-.mtxt{font-size:15px;color:var(--tx);line-height:1.6;margin-bottom:16px}
-.mcode{background:var(--surf);border:1px solid var(--brd);border-radius:6px;padding:12px;font-family:monospace;font-size:10px;color:var(--gr);word-break:break-all;margin-bottom:12px;min-height:54px;line-height:1.5;cursor:pointer}
-.minp{width:100%;background:var(--surf);border:2px solid var(--brd);color:var(--cr);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;padding:14px;border-radius:10px;outline:none;margin-bottom:8px;transition:border-color .2s}
+.mbox{background:var(--card);border:1px solid var(--brd);border-radius:14px 14px 0 0;padding:28px 24px 32px;width:100%;max-width:480px}
+.mtit{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--cr);margin-bottom:8px}
+.mtxt{font-size:13px;color:var(--dm);line-height:1.6;margin-bottom:16px}
+.mcode{background:var(--surf);border:1px solid var(--brd);border-radius:6px;padding:12px;font-family:monospace;font-size:10px;color:var(--gr);word-break:break-all;margin-bottom:12px;min-height:54px;line-height:1.5;cursor:pointer;transition:color .2s}
+.mcode:hover{color:var(--gold)}
+.minp{width:100%;background:var(--surf);border:1px solid var(--brd);color:var(--cr);font-family:'Jost',sans-serif;font-size:14px;padding:13px;border-radius:6px;outline:none;margin-bottom:8px;transition:border-color .2s}
 .minp:focus{border-color:var(--gd)}
-.minp.big{font-size:26px;font-weight:600;text-align:center}
 .merr{color:#c04040;font-size:12px;margin-bottom:8px;display:none}
 .mact{display:flex;gap:8px;margin-top:4px}
-.btns{flex:1;background:none;border:2px solid var(--brd);color:var(--tx);font-size:15px;font-weight:500;padding:14px;border-radius:12px;cursor:pointer}
+.btns{flex:1;background:none;border:1px solid var(--brd);color:var(--dm);font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1px;padding:13px;border-radius:6px;cursor:pointer;transition:all .2s}
+.btns:hover{border-color:var(--dm)}
+
 /* CELEBRATION */
 .cel{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:200;background:rgba(0,0,0,.88);opacity:0;pointer-events:none;transition:opacity .4s;padding:32px}
 .cel.show{opacity:1;pointer-events:all}
 .celi{text-align:center;max-width:300px}
 .celico{font-size:72px;display:block;margin-bottom:18px;animation:bi .6s ease}
-.celt{font-size:30px;font-weight:700;color:var(--cr);margin-bottom:12px}
-.celx{font-size:16px;color:var(--tx);line-height:1.6;margin-bottom:26px}
+.celt{font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--cr);margin-bottom:12px}
+.celx{font-size:15px;color:var(--tx);line-height:1.6;margin-bottom:26px}
 @keyframes bi{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
 </style>
 </head>
@@ -194,45 +147,61 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 
 <!-- WELCOME -->
 <div id="sw" class="screen nonav">
-<div class="scrl"><div id="wtree" class="wtree"></div>
-<h1 class="wtitle">Мой<br><em>Сад</em></h1>
-<div class="wline"></div>
-<p class="wsub">Ты сейчас посадишь зерно себя.<br>Наблюдай за тем, что вырастет.</p>
-<label class="nlbl" for="ni">Как тебя звать в этом саду?</label>
-<input type="text" id="ni" class="ninp" placeholder="Твоё имя" maxlength="18" autocomplete="off" autocorrect="off" spellcheck="false">
-<button class="btnp" id="startBtn" onclick="startApp()" disabled>Посадить зерно</button>
-</div></div>
+<div class="scrl">
+  <div id="wtree" class="wtree"></div>
+  <h1 class="wtitle">Мой<br><em>Сад</em></h1>
+  <div class="wline"></div>
+  <p class="wsub">Ты сейчас посадишь<br>зерно себя.<br>Наблюдай за тем, что вырастет.</p>
+  <label class="nlbl" for="ni">Как тебя звать в этом саду?</label>
+  <input type="text" id="ni" class="ninp" placeholder="Твоё имя" maxlength="18" autocomplete="off" autocorrect="off" spellcheck="false">
+  <button class="btnp" id="startBtn" onclick="startApp()" disabled>Посадить зерно</button>
+</div>
+</div>
 
 <!-- HOME -->
 <div id="sh" class="screen">
 <div class="scrl">
-<div class="hdr">
-  <div><div class="hdlbl">Сад</div><div class="hname" id="hname">—</div></div>
-  <div class="hdbadge"><span id="hdnum">1</span><small>/ 21</small></div>
+  <div class="hdr">
+    <div><div class="hdlbl">Сад</div><div class="hname" id="hname">—</div></div>
+    <div class="hdbadge"><span id="hdnum">1</span><small>/ 21</small></div>
+  </div>
+  <div class="treewrap" id="mainTree"></div>
+  <div class="wmsg" id="wmsg"></div>
+  <div class="psec">
+    <div class="prow">
+      <span class="plbl">Рост</span>
+      <div class="pbar"><div class="pfill" id="pfill"></div></div>
+      <span class="pnum" id="pnum">0/21</span>
+    </div>
+    <div class="sname" id="sname">семя в земле</div>
+    <div class="timer" id="htimer">посажено только что</div>
+  </div>
+  <div class="tcrd" id="tcrd" onclick="openToday()">
+    <div class="tctop"><span class="tclbl">Задание дня</span><div class="tcchk" id="tcchk"></div></div>
+    <div class="tctit" id="tctit">—</div>
+    <div class="tcprev" id="tcprev">—</div>
+  </div>
 </div>
-<div class="treewrap" id="mainTree"></div>
-<div class="wmsg" id="wmsg"></div>
-<div class="retbanner" id="retbanner" onclick="goReturnDay()"><span id="rettext"></span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#c8a060" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-<div class="psec">
-  <div class="prow"><span class="plbl">Рост</span><div class="pbar"><div class="pfill" id="pfill"></div></div><span class="pnum" id="pnum">0/21</span></div>
-  <div class="sname" id="sname">семя в земле</div>
-  <div class="timer" id="htimer">посажено только что</div>
 </div>
-<div class="tcrd" id="tcrd" onclick="openToday()">
-  <div class="tctop"><span class="tclbl">Задание дня</span><div class="tcchk" id="tcchk"></div></div>
-  <div class="tctit" id="tctit">—</div>
-  <div class="tcprev" id="tcprev">—</div>
-</div>
-</div></div>
 
 <!-- TASK -->
 <div id="st" class="screen nonav">
 <div class="thdr">
-  <button class="bbtn" onclick="closeTask()"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 6l-6 5 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button class="bbtn" onclick="closeTask()">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M14 6l-6 5 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
   <div class="tdn" id="tdn">1</div>
   <div class="thi"><div class="twkl" id="twkl">Неделя 1</div><div class="ttit" id="ttit">—</div></div>
 </div>
-<div class="scrl"><div class="tbody" id="tbody"></div></div>
+<div class="scrl">
+<div class="tbody">
+  <div class="ttxt" id="ttxt">—</div>
+  <div class="twhy" id="twhy">—</div>
+  <label class="nlbl" id="tprompt">Заметка:</label>
+  <textarea class="narea" id="tnote" placeholder="Пиши сюда..." rows="5"></textarea>
+  <button class="cbtn" id="cbtn" onclick="toggleComplete()"><span id="cbtntxt">Отметить выполненным</span></button>
+</div>
+</div>
 </div>
 
 <!-- DAYS -->
@@ -241,15 +210,12 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 <div class="scrl" id="dlist"></div>
 </div>
 
-<!-- FEELINGS -->
-<div id="sf" class="screen">
-<div class="fhdr"><div class="stit">Чувства</div></div>
-<div class="scrl" id="flist"></div>
-</div>
-
 <!-- GARDEN -->
 <div id="sg" class="screen">
-<div class="ghdr"><div class="stit">Сад</div><button class="addbtn" onclick="openAddFriend()">+ Подруга</button></div>
+<div class="ghdr">
+  <div class="stit">Сад</div>
+  <button class="addbtn" onclick="openAddFriend()">+ Подруга</button>
+</div>
 <div class="scrl">
   <button class="mkcbtn" onclick="openMyCode()">🌱 Поделиться своим деревом</button>
   <div class="ggrid" id="ggrid"></div>
@@ -257,11 +223,10 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 </div>
 
 <!-- NAV -->
-<nav id="nav">
-  <button class="nb act" id="nav-h" onclick="navTo('h')"><span class="ni">🌱</span><span class="nl">Дерево</span></button>
-  <button class="nb" id="nav-d" onclick="navTo('d')"><span class="ni">📋</span><span class="nl">Дни</span></button>
-  <button class="nb" id="nav-f" onclick="navTo('f')"><span class="ni">💧</span><span class="nl">Чувства</span></button>
-  <button class="nb" id="nav-g" onclick="navTo('g')"><span class="ni">🌿</span><span class="nl">Сад</span></button>
+<nav id="nav" class="vis">
+  <button class="nb act" id="nav-h" onclick="nav('h')"><span class="ni">🌱</span><span class="nl">Моё дерево</span></button>
+  <button class="nb" id="nav-d" onclick="nav('d')"><span class="ni">📋</span><span class="nl">Дни</span></button>
+  <button class="nb" id="nav-g" onclick="nav('g')"><span class="ni">🌿</span><span class="nl">Сад</span></button>
 </nav>
 
 <!-- MODAL -->
@@ -276,646 +241,334 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
   <div class="celt" id="celt">Новый рост</div>
   <div class="celx" id="celx">—</div>
   <button class="btnp" style="max-width:200px" onclick="hideCel()">Хорошо</button>
-</div></div>
+</div>
+</div>
 
 <script>
-// ══════════════════════════════════════
-// FEELINGS LIBRARY v2.0
-// ══════════════════════════════════════
-const FEELINGS = [
-  {
-    id:"fear", name:"Страх", emoji:"🌑",
-    triggers:["страх","страшно","боюсь","ужас","паника","испуг","холод","сжатие","замерла","ступор","сердце колотится","не могу дышать","трясёт","леденею","оцепенела","зажалась","нет","опасно","угроза"],
-    short:"Телу кажется что есть опасность. Реальная или нет — тело не знает разницы.",
-    body:"Горло сжимается. Живот холодеет. Ноги становятся ватными. Дыхание поднимается к груди.",
-    philosophy:"Страх — это Сторож, который путает безопасность с подчинением. Он кричит «стой» — но это не значит что опасность реальна. Познание может увидеть это — и сделать шаг.",
-    practice:{name:"Якорь в пол",steps:["Встань, ноги на ширине плеч","Сильно надави стопами в пол — почувствуй как пол держит тебя","Скажи вслух: «Я здесь. Пол держит меня»","Повтори медленно 3 раза"]},
-    stuck:"Прижми язык к нёбу + сожми мизинец одновременно. Держи 30 секунд. Это прерывает паническую волну."
-  },
-  {
-    id:"shame", name:"Стыд", emoji:"🌒",
-    triggers:["стыд","стыдно","позор","унижение","неловко","жар","хочется спрятаться","сжалась","краснею","неудобно","провалиться","неправильная","дефектная","недостаточно хорошая","ничтожество","смешно","осудят","не такая"],
-    short:"Ощущение что ты сама по себе плохая — не поступок, а ты целиком. Это ложь Сторожа.",
-    body:"Жар в лице. Плечи сворачиваются внутрь. Взгляд падает вниз. Хочется стать меньше или исчезнуть.",
-    philosophy:"Стыд говорит «я плохая». Вина говорит «я сделала плохое». Это разные вещи. Ты — не твои ошибки. В той ситуации с тем знанием ты делала лучшее что могла.",
-    practice:{name:"Отделить себя от стыда",steps:["Закрой глаза","Представь стыд как предмет — камень облако туман","Мысленно отодвинь его на расстояние вытянутой руки","Скажи: «Я не есть стыд. Я та кто его чувствует»"]},
-    stuck:"Положи руку на грудь. Скажи вслух три раза: «В тот момент я делала всё что могла». Голос важен — тело слышит его иначе чем мысли."
-  },
-  {
-    id:"anger", name:"Гнев", emoji:"🔥",
-    triggers:["злость","гнев","бешенство","ярость","раздражение","бесит","закипаю","хочется кричать","дрожь","напряжение","кулаки","хочется ударить","несправедливо","достало","не могу больше","взрыв","кипит","ненавижу"],
-    short:"Гнев — сигнал что твою границу нарушили. Это не плохо. Это важная информация.",
-    body:"Челюсть сжимается. Плечи напрягаются. Жар поднимается вверх. Руки сжимаются в кулаки или дрожат.",
-    philosophy:"Гнев — это Воля встретившая препятствие. Подавленный гнев уходит в тело и становится болью в шее спине голове. Ему нужен безопасный выход — не человек а физическое действие.",
-    practice:{name:"Сброс через тело",steps:["Возьми подушку или сложенное одеяло","Бей его обеими руками с выдохом «ха!»","Делай это 30 секунд — не сдерживайся","Остановись. Дыши. Что изменилось в теле?"]},
-    stuck:"Сожми кулаки изо всех сил на 10 секунд. Потом резко разожми. Встряхни руки. Повтори 3 раза. Это сбрасывает физическое напряжение без слов."
-  },
-  {
-    id:"sadness", name:"Печаль", emoji:"🌧",
-    triggers:["грусть","печаль","тоска","слёзы","тяжесть","ком в горле","больно","хочется плакать","горе","утрата","потеряла","пусто в груди","уныние","скучаю","жалко","потеряно","не вернуть","боль"],
-    short:"Печаль — сигнал потери. Она приходит когда что-то важное ушло или не случилось.",
-    body:"Тяжесть в груди. Ком в горле. Глаза щиплют. Движения замедляются. Хочется свернуться.",
-    philosophy:"Печаль — не слабость. Без неё нет глубины. Она говорит: это было важно для меня. Позволь ей пройти через тебя — не задерживай и не торопи.",
-    practice:{name:"Разрешить слёзам течь",steps:["Сядь удобно в тихом месте","Положи руку на грудь","Скажи вслух: «Мне сейчас грустно. Это нормально»","Если идут слёзы — не останавливай. Просто дыши и позволяй"]},
-    stuck:"Включи тихую музыку без слов. Просто лежи. Не нужно ничего делать с этим — только быть рядом с собой."
-  },
-  {
-    id:"anxiety", name:"Тревога", emoji:"🌀",
-    triggers:["тревога","беспокойство","волнение","не отпускает","крутится","не могу успокоиться","предчувствие","неопределённость","всё плохо","что-то случится","сжатие в животе","бабочки","прокручиваю","думаю думаю","нет покоя","зажата","напряжена","жду плохого"],
-    short:"Тревога — страх без конкретного объекта. Мозг ищет угрозу и не находит — и это само по себе пугает.",
-    body:"Сжатие в животе или диафрагме. Дыхание поверхностное. Мысли скачут и не останавливаются.",
-    philosophy:"Тревога — Воля которая хочет контролировать будущее. Но будущего нет — есть только этот момент. Вернись в него через тело — оно всегда в настоящем.",
-    practice:{name:"3–2–1 здесь",steps:["Назови вслух 3 вещи которые видишь прямо сейчас","Назови 2 звука которые слышишь","Назови 1 ощущение в теле прямо сейчас","Сделай медленный выдох — длиннее вдоха"]},
-    stuck:"Вдох на 4 счёта — задержка на 4 — выдох на 6. Повтори 4 раза. Длинный выдох включает парасимпатику и замедляет тревогу."
-  },
-  {
-    id:"guilt", name:"Вина", emoji:"⚓",
-    triggers:["вина","виновата","должна была","раскаяние","тяжесть на плечах","груз","ошибка","неправильно","подвела","зря","не так сделала","плохая мать","плохая дочь","не справилась","виню","моя вина","из-за меня","всё испортила"],
-    short:"Вина говорит что ты могла поступить иначе. Но в тот момент с тем знанием — ты делала лучшее что могла.",
-    body:"Тяжесть на плечах или груди. Голова опускается. Хочется исправить или наказать себя.",
-    philosophy:"Хроническая вина — гнев направленный на себя. Она не помогает исправить прошлое. Она только забирает силы на настоящее. Ответственность — это признать и двигаться. Вина — это застрять.",
-    practice:{name:"Письмо свидетеля",steps:["Напиши от лица мудрого друга который знает всю твою историю","Начни: «В той ситуации ты делала всё что могла»","Продолжи: «Ты не знала тогда того что знаешь сейчас»","Прочитай написанное вслух"]},
-    stuck:"Честно спроси себя: «С тем знанием и теми ресурсами что у меня были тогда — могла ли я поступить иначе?» Чаще всего ответ — нет."
-  },
-  {
-    id:"loneliness", name:"Одиночество", emoji:"🌙",
-    triggers:["одиночество","одиноко","покинутость","холод в груди","тишина","никому не нужна","невидимая","чужая","не слышат","не понимают","нет рядом","брошена","не с кем","изоляция","отдельная","меня не видят","одна","пустота вокруг"],
-    short:"Одиночество — боль разрыва связи. Оно говорит: мне нужен контакт. Это нормальная человеческая потребность.",
-    body:"Холод в груди. Плечи опущены. Горло сжимается. Иногда физически болит в районе сердца.",
-    philosophy:"Одиночество среди людей — самое острое. Ты можешь быть в комнате с людьми и чувствовать себя невидимой. Это не значит что ты не нужна. Это значит что связь нарушена — и её можно восстановить.",
-    practice:{name:"Контакт с собой и миром",steps:["Обними себя — буквально руками за плечи","Скажи: «Я здесь. Я с собой»","Потом подойди к окну или выйди","Найди один живой объект — дерево птица человек вдали — и просто посмотри на него 1 минуту"]},
-    stuck:"Напиши одному человеку — не «мне плохо» а просто «привет как ты». Маленький контакт разрывает изоляцию сильнее чем большой разговор."
-  },
-  {
-    id:"nothing", name:"Ничего не чувствую", emoji:"⬜",
-    triggers:["ничего","пустота","не знаю","нормально","никак","всё равно","онемела","как робот","не чувствую","нет ничего","пусто","безразличие","не могу почувствовать","заморожена","пустая","отключилась","нет сил чувствовать","устала"],
-    short:"Ничего не чувствовать — это тоже чувство. Это защита психики когда боли было слишком много.",
-    body:"Тело как будто далеко. Движения механические. Нет ни радости ни боли. Иногда лёгкое онемение рук или лица.",
-    philosophy:"Эмоциональная анестезия — не поломка. Это Воля которая выключила боль чтобы выжить. Она включится снова — когда почувствует себя в безопасности. Твоя задача — создать эту безопасность.",
-    practice:{name:"Разбудить тело",steps:["Потри ладони друг о друга сильно — 20 секунд","Положи тёплые ладони на лицо","Почувствуй тепло — это контакт","Спроси: «Где в теле хоть что-то есть — тепло тяжесть покалывание?»"]},
-    stuck:"Холодная вода на запястья или контрастный душ начиная с ног. Тело просыпается от температурного контраста — это физиология."
-  }
-];
+// ═══════════════ DATA ═══════════════
 
-// ══════════════════════════════════════
-// STAGES & MESSAGES
-// ══════════════════════════════════════
-const STAGES=["семя в земле","первый росток","первый росток","маленький росток","маленький росток","молодой стебель","молодой стебель","первые ветви","первые ветви","первые ветви","молодое деревце","молодое деревце","молодое деревце","растущее дерево","растущее дерево","растущее дерево","крепкое дерево","крепкое дерево","крепкое дерево","бутоны","бутоны","🌸 дерево расцвело"];
-const WMSGS=["День прошёл без полива. Дерево не умирает — оно ждёт тебя.","Пауза — не провал. Корни держат. Что сегодня забрало твоё время?","Дерево терпеливо. Один маленький шаг — и оно снова пойдёт в рост.","Откат — это информация. Что сейчас требует слишком много твоей воды?","Иногда нужно просто ждать дождя. Дерево знает это лучше нас."];
-const GMSGS=[{i:"🌱",t:"Росток тянется",x:"Ты сделала это. Дерево тебя слышит."},{i:"🍃",t:"Новый лист",x:"Каждое действие — настоящий рост. Не метафора."},{i:"🌿",t:"Ветка крепнет",x:"Смотри как оно растёт. Это ты его растишь."},{i:"🌳",t:"Дерево растёт",x:"Ты здесь. Ты делаешь. Этого достаточно."},{i:"✨",t:"Хорошо",x:"Сегодняшний день посчитан. Он настоящий."}];
+const STAGES=['семя в земле','первый росток','первый росток','маленький росток','маленький росток','молодой стебель','молодой стебель','первые ветви','первые ветви','первые ветви','молодое деревце','молодое деревце','молодое деревце','растущее дерево','растущее дерево','растущее дерево','крепкое дерево','крепкое дерево','крепкое дерево','бутоны','бутоны','🌸 дерево расцвело'];
 
-// ══════════════════════════════════════
-// DAYS v2.0 — с техниками
-// ══════════════════════════════════════
+const WMSGS=['День прошёл без полива. Дерево не умирает — оно ждёт тебя.','Пауза — не провал. Корни держат. Что сегодня забрало твоё время?','Дерево терпеливо. Один маленький шаг — и оно снова пойдёт в рост.','Откат — это информация. Что сейчас требует слишком много твоей воды?','Иногда нужно просто ждать дождя. Дерево знает это лучше нас.'];
+
+const GMSGS=[{i:'🌱',t:'Росток тянется',x:'Ты сделала это. Дерево тебя слышит.'},{i:'🍃',t:'Новый лист',x:'Каждое действие — настоящий рост. Не метафора.'},{i:'🌿',t:'Ветка крепнет',x:'Смотри как оно растёт. Это ты его растишь.'},{i:'🌳',t:'Дерево растёт',x:'Ты здесь. Ты делаешь. Этого достаточно.'},{i:'✨',t:'Хорошо',x:'Сегодняшний день посчитан. Он настоящий.'}];
+
 const DAYS=[
-{d:1,w:1,title:"Рука на груди",
-smysl:"Мы не начинаем меняться. Мы просто проверяем — есть ли связь между головой и телом. Когда рука лежит на груди и дыхание замедляется, мозг получает сигнал: «Я в безопасности». С этого начинается любое восстановление.",
-task:"Утром положи руку на грудь. Два медленных вдоха. Одно слово — что есть в теле прямо сейчас?",
-main:{name:"Три минуты с собой",tag:"утро",why:"Тело знает правду раньше головы. Это не упражнение — это просто проверка связи.",steps:["Проснувшись, не вставай сразу","Положи правую руку на грудь, левую — на живот","Закрой глаза. Дыши медленно — просто наблюдай как живот поднимается","3 минуты — просто дышать и замечать что есть"]},
-extra:{name:"Стоп-слово",tag:"в течение дня",why:"Каждый замеченный «должна» — это момент пробуждения. Замеченная программа теряет часть власти.",steps:["Заметь когда в голове звучит «должна» «надо» «обязана»","Про себя скажи: «Стоп. Это не мой голос»","Поставь мысленную галочку — и иди дальше","Вечером — сколько раз заметила?"]},
-evening:"Что сейчас есть в теле? Одно слово:",
-p:"Моё слово сегодня:"},
-
-{d:2,w:1,title:"Считать «должна»",
-smysl:"Мы не боремся с «должна». Мы учимся видеть их как отдельные объекты а не как себя. Каждая замеченная «программа» теряет часть власти. Это первый шаг к вопросу: а чего хочу я?",
-task:"Весь день считай «должна» и «надо» в голове. Просто считай — не борись.",
-main:{name:"Счётчик приказов",tag:"весь день",why:"Пока «должна» не сосчитаны — они управляют тобой незаметно. Разведка важнее боя.",steps:["Открой заметки в телефоне или возьми бумагу","Каждый раз когда в голове «я должна...» — ставь палочку","Не оценивай и не борись — только считай","Вечером посмотри на цифру"]},
-extra:{name:"Чей голос?",tag:"вечер",why:"У каждого «должна» есть источник. Назвать его — значит отнять у приказа часть власти.",steps:["Выбери одну самую громкую «должна» дня","Спроси: «Чей это голос? Мамин? Сестры? Чужой?»","Запиши имя — не чтобы обвинить а чтобы отделить","Это не твой голос. Это эхо."]},
-evening:"Что осталось в теле после всего этого счёта? Одно слово:",
-p:"Насчитала «должна»:"},
-
-{d:3,w:1,title:"Одна любимая вещь",
-smysl:"Твоя Воля когда-то сказала: «Это моё». Сегодня мы напоминаем ей об этом. Мы возвращаем право на собственность — не на квартиру и не на деньги, а на предмет который выбрала ты.",
-task:"Найди в комнате одну вещь которая нравится именно тебе. Не потому что подарили — просто нравится.",
-main:{name:"Поиск сокровища",tag:"утро",why:"Ты когда-то выбрала эту вещь. Она до сих пор помнит тепло твоих рук.",steps:["Пройди по комнате не спеша","Найди один предмет который вызывает что-то тёплое — форма цвет ощущение","Возьми его в руки","Просто подержи — не анализируй"]},
-extra:{name:"Якорное место",tag:"днём",why:"Физический якорь — точка опоры в пространстве. Пусть эта вещь стоит на виду как маяк.",steps:["Поставь найденную вещь на видное место","Опиши её вслух или мысленно: цвет текстура запах","Скажи: «Это моё. Я это выбрала»","Пусть стоит там весь день"]},
-evening:"Как ощущается эта вещь рядом? Одно слово:",
-p:"Моя вещь — это:"},
-
-{d:4,w:1,title:"Любимый запах",
-smysl:"Обоняние — единственное чувство которое идёт напрямую в память, минуя разум. Запах способен вернуть тебя в момент когда ты была спокойна. Сегодня мы ищем этот якорь.",
-task:"Вспомни один запах который ты любила — в детстве или в спокойное время. Найди что-то похожее сегодня.",
-main:{name:"Поиск аромата",tag:"утро",why:"Мозг не спорит с запахом. Он просто вспоминает где ты чувствовала это раньше — и возвращает туда.",steps:["Вспомни один запах который был тебе дорог — хвоя ваниль дождь кофе книги","Запиши его","Есть ли сейчас доступ к чему-то похожему? Чай специи мыло улица","Если нет — просто подержи воспоминание"]},
-extra:{name:"Где в теле?",tag:"днём",why:"Запах входит в нос а отзывается где-то в груди или животе. Это твой внутренний компас.",steps:["Когда найдёшь запах — закрой глаза","Вдыхай медленно","Спроси: «Где в теле я чувствую этот запах?»","Положи руку туда"]},
-evening:"Что вспомнило тело сегодня? Одно слово:",
-p:"Мой запах — это:"},
-
-{d:5,w:1,title:"Свой вкус",
-smysl:"Еда — это первый и самый простой акт выбора. Ты решаешь что войдёт в твоё тело. С этого начинается суверенитет: «Я выбираю то что входит в меня».",
-task:"Один раз сегодня поешь или выпьешь то чего хочет тело прямо сейчас — не что есть а что хочется.",
-main:{name:"Выбор еды",tag:"утро",why:"«Что есть» — это про выживание. «Что я хочу съесть» — это про жизнь. Разница важнее чем кажется.",steps:["Спроси себя: «Что я ХОЧУ сегодня? Тёплое холодное сладкое кислое?»","Почувствуй — не думай","Выбери один продукт или напиток","Это твой выбор — не остаток и не то что удобно"]},
-extra:{name:"Одно блюдо без спешки",tag:"днём",why:"Медленная еда — это когда ты присутствуешь. Это не диета — это возвращение к себе через вкус.",steps:["Возьми то что выбрала","Сядь — не на ходу","Первые три куска или глотка — очень медленно","Просто заметь вкус. Больше ничего не нужно"]},
-evening:"Что я выбрала для себя сегодня? Одно слово:",
-p:"Я выбрала:"},
-
-{d:6,w:1,title:"Три факта",
-smysl:"Самооценка строится на фактах а не на оценках. Факт — это то что можно потрогать. Оценка — это голос Сторожа. Сегодня учимся видеть разницу.",
-task:"Напиши три факта о себе. Только факты — без оценок. «Я варю борщ» — факт. «Я хорошая мама» — оценка.",
-main:{name:"Факты без оценок",tag:"утро",why:"Факт можно потрогать. Оценку — только обидеться. Начинаем строить на твёрдом.",steps:["Возьми бумагу или телефон","Напиши три предложения о себе начинающихся с «Я умею...» «Я знаю...» «Я пережила...»","Проверь — это описание действия или приговор?","Если приговор — замени на действие"]},
-extra:{name:"Зачеркнуть приговор",tag:"вечер",why:"Оценка — это не ты. Это чужой голос который прилип. Его можно убрать.",steps:["Рядом с каждым фактом напиши оценку которую обычно добавляет голос в голове","«Я варю борщ» — «но недостаточно часто»","Зачеркни оценку","Оставь только факт — посмотри на него"]},
-evening:"Что оказалось фактом а не оценкой? Одно слово:",
-p:"Мои три факта:"},
-
-{d:7,w:1,title:"Итог первой недели",
-smysl:"Твоя Воля должна увидеть: я двигалась. Я существую не только как функция для других — но как наблюдатель своей жизни. Эта неделя — доказательство.",
-task:"Перечитай всё что писала за неделю. Найди один момент где ты услышала именно себя.",
-main:{name:"Перечитывание",tag:"утро",why:"Листай записи как дневник незнакомки. Ты увидишь: эта женщина уже начала путь.",steps:["Открой все свои заметки за эту неделю","Читай медленно — не анализируй а просто читай","Замечай — где звучит твой голос а не чужой","Где был хоть один момент настоящего?"]},
-extra:{name:"Одно открытие",tag:"вечер",why:"Одно предложение без «надо» — первый кирпичик твоей а не чужой картины себя.",steps:["Напиши предложение начиная с «Я заметила что...»","Без слов «должна» «надо» «обязана»","Это твоё наблюдение — не оценка","Сохрани это предложение — оно важно"]},
-evening:"Я заметила что... (одно слово или фраза):",
-p:"Моё открытие недели:"},
-
-{d:8,w:2,title:"Мой выбор",
-smysl:"Воля возвращается через мышцы а не через мысли. Когда ты делаешь что-то что просит тело — ты говоришь ему: «Ты имеешь право хотеть». С этого начинается настоящий выбор.",
-task:"Один маленький выбор сегодня — только для себя. Что угодно — главное что это твоё решение.",
-main:{name:"Сканирование тела",tag:"утро",why:"Ты не спрашиваешь «как мне быть» — ты спрашиваешь тело: «Где ты сейчас?» И отвечаешь действием.",steps:["Закрой глаза","Медленно пройди вниманием от макушки до пальцев ног","Где есть напряжение? Где тепло? Что хочет пошевелиться?","Сделай это движение — потянись зевни повернись"]},
-extra:{name:"Микро-выбор",tag:"вечер",why:"Даже чай выпитый не в спешке — это выбор. Запиши его — и он станет кирпичиком внутренней опоры.",steps:["Запиши: «Сегодня я выбрала...»","Даже если это «выпить воды когда хотела» «лечь когда устала»","Это твой выбор — он настоящий","Замечай разницу между «я выбрала» и «так вышло»"]},
-evening:"Какой выбор сегодня был моим? Одно слово:",
-p:"Мой выбор сегодня:"},
-
-{d:9,w:2,title:"10 минут",
-smysl:"Мы ломаем автоматическую реакцию «должна немедленно». 10 минут — это не отказ. Это возвращение себе права на паузу. В паузе рождается не «должна» а «я решаю».",
-task:"Когда кто-то попросит что-то — ответь «Я сделаю через 10 минут». Засеки. Не объясняй почему.",
-main:{name:"Пауза",tag:"в течение дня",why:"10 минут — не отказ а вдох. Сначала я — потом мир. Это не эгоизм — это граница.",steps:["Когда поступает просьба — скажи: «Я сделаю через 10 минут»","Засеки время на телефоне","В эти 10 минут спроси себя: «Что я чувствую прямо сейчас?»","По звонку таймера — реши: делать или нет и когда"]},
-extra:{name:"Что в теле в паузе?",tag:"во время паузы",why:"В пространстве между чужим импульсом и твоим ответом — там ты. Найди себя там.",steps:["В паузе положи руку на живот","Один медленный вдох","Назови телесное ощущение: тепло тяжесть дрожь пустота спокойствие","Это ты — не реакция на другого"]},
-evening:"Сколько пауз удалось взять? И что было в них?",
-p:"Как прошло:"},
-
-{d:10,w:2,title:"Выйти без цели",
-smysl:"Пространство за дверью принадлежит тебе не меньше чем другим. Ты не обязана иметь причину чтобы выйти. Это восстановление территориального суверенитета.",
-task:"Выйди на улицу на 5–10 минут. Без цели без дела. Постоять у подъезда или дойти до угла — этого достаточно.",
-main:{name:"Маршрут до двери",tag:"утро",why:"Ты не обязана оправдываться за глоток воздуха. Дверь — это граница миров. Ты можешь её переступать.",steps:["Оденься","Возьми ключи","Выйди за дверь подъезда — это уже выход","Даже 3 минуты на ступеньках считается"]},
-extra:{name:"Одно ощущение",tag:"на улице",why:"Улица — это мир. Ты в нём есть. Одно ощущение это подтверждает.",steps:["Постой или пройди немного","Найди одно ощущение: запах звук свет прикосновение ветра","Просто заметь его","Это доказательство что мир больше комнаты"]},
-evening:"Что запомнилось с улицы? Одно слово:",
-p:"Моё ощущение от улицы:"},
-
-{d:11,w:2,title:"Моё умение",
-smysl:"Мы отделяем навык от роли. Ты — не «мать» не «жертва» не «безработная». Ты человек который умеет конкретные вещи. Навык — твоя ценность которую никто не отнимет.",
-task:"Найди одно конкретное умение которое есть только у тебя — не роль а действие.",
-main:{name:"Список умений",tag:"утро",why:"У тебя есть не только «долги» и «хвосты». У тебя есть руки которые умеют. Вспомни их.",steps:["Напиши 3 вещи которые ты умеешь делать","Не роли («я мать») — а действия («я умею слышать людей»)","Не оценки («я добрая») — а конкретное («я умею найти выход когда денег нет»)","Посмотри на список — это ты"]},
-extra:{name:"Одно применение для себя",tag:"днём",why:"Умение применённое для себя а не только для других — это возврат к себе.",steps:["Возьми одно умение из списка","Примени его сегодня для себя или для своего удовольствия","Не для дочери не для мужчины — для себя","Даже мелочь — организовать свою полку написать заметку"]},
-evening:"Что я умею? Одно слово:",
-p:"Моё умение:"},
-
-{d:12,w:2,title:"Одно завершённое дело",
-smysl:"«Хвосты» давят не объёмом а фактом своего существования. Одно завершённое дело — даже самое маленькое — даёт сигнал: «Я могу завершать».",
-task:"Одно маленькое дело которое откладывалось. Переставить вещь. Написать сообщение. Выбросить старое.",
-main:{name:"Сканирование хвостов",tag:"утро",why:"Когда всё висит — выбери одно. Давят не дела а ощущение «я ничего не могу».",steps:["Запиши одно дело которое висит над душой","Самое маленькое из всех","Поставь таймер на 5 минут","Делай только 5 минут — потом стоп по звонку"]},
-extra:{name:"Завершение",tag:"после",why:"Факт завершения важнее объёма. Тело запоминает: «Я завершаю».",steps:["После 5 минут — посмотри что сделано","Запиши: «Я сделала...»","Если за 5 минут полностью — отлично","Если нет — тоже отлично: ты начала"]},
-evening:"Что я завершила сегодня? Одно слово:",
-p:"Я сделала:"},
-
-{d:13,w:2,title:"Без объяснений",
-smysl:"Ты не обязана оправдывать свои решения. Объяснения — это способ просить разрешения. Сегодня действуешь без разрешения. Это взрослая позиция.",
-task:"Один раз сегодня прими решение и не объясняй его. Просто — без «потому что».",
-main:{name:"Одно решение",tag:"утро",why:"Выбрать когда лечь спать — это тоже суверенитет. Маленькое «я так хочу» меняет всё.",steps:["С утра выбери одно маленькое решение которое касается только тебя","Что угодно: когда встать куда сесть что надеть","Просто прими его","Не объясняй — ни вслух ни в голове"]},
-extra:{name:"На «почему» — ответ без объяснений",tag:"в течение дня",why:"Каждое «почему?» — это тест на твоё право. Ответь без объяснений — и граница встанет на место.",steps:["Если кто-то спросит «почему?» на твоё решение","Ответь: «Я так хочу» или «Мне так нужно»","Больше ничего","Заметь что произошло с тобой внутри"]},
-evening:"Что дало мне это решение без объяснений? Одно слово:",
-p:"Что это было:"},
-
-{d:14,w:2,title:"Итог второй недели",
-smysl:"Выборы которые ты сделала за эту неделю — фундамент новой привычки. Каждый раз когда ты выбираешь себя ты укрепляешь: «Я имею значение».",
-task:"Перечитай записи второй недели. Найди один момент где действие было по-настоящему твоим.",
-main:{name:"Перечитывание второй недели",tag:"утро",why:"Ты уже не та женщина что была 14 дней назад. Перечитай — и увидишь сколько «я выбрала» сложились в путь.",steps:["Открой все заметки за вторую неделю","Ищи моменты где чувствовалось «это я» а не «я должна»","Даже один такой момент — это настоящее","Запиши его"]},
-extra:{name:"Мост к третьей неделе",tag:"вечер",why:"Третья неделя — самооценка. Для неё нужна одна опора: доказательство что ты можешь.",steps:["Напиши: «На этой неделе я выбрала себя когда...»","Закончи одним конкретным примером","Это твоя точка опоры","Она не снаружи — она внутри"]},
-evening:"На этой неделе я выбрала себя когда... (одно слово):",
-p:"Мой выбор этой недели:"},
-
-{d:15,w:3,title:"Я справилась",
-smysl:"Самооценка начинается не с «я классная» а с «я выжила». Ты справилась с тем что тебя почти разрушило. Это факт. Сегодня даём телу почувствовать этот факт.",
-task:"Напиши одно предложение: «Я справилась с ____». Вышла из дома. Ответила. Выжила в тяжёлый день.",
-main:{name:"Один факт справилась",tag:"утро",why:"Ты не «должна была справиться лучше». Ты справилась. Точка. Это не оценка — это факт.",steps:["Напиши: «Я справилась с...»","Назови конкретную ситуацию — любую","Не героическую — любую где ты выжила или сделала шаг","Это настоящее доказательство"]},
-extra:{name:"Телесный якорь",tag:"днём",why:"Слова + тело вместе = тело запоминает. Рука на груди + правда вслух = это остаётся.",steps:["Произнеси свою фразу «Я справилась с...» вслух","Одновременно положи руку на грудь","Почувствуй — тепло давление что-то","Это правда. Она живёт в теле."]},
-evening:"Как тело отреагировало на эту правду? Одно слово:",
-p:"Я справилась с:"},
-
-{d:16,w:3,title:"Зеркало без приговора",
-smysl:"Мы не заставляем себя «любить отражение». Мы учимся смотреть на себя без оценки. Одна нейтральная черта — первый шаг к тому чтобы видеть реальность а не проекцию стыда.",
-task:"Посмотри в зеркало. Найди одну черту которую можно описать без оценки — просто факт.",
-main:{name:"Только глаза",tag:"утро",why:"Не смотри на лицо — смотри в глаза. Там ты а не «недостатки».",steps:["Подойди к зеркалу","Смотри только в свои глаза — не на лицо","Просто смотри 1 минуту","Что ты видишь в этих глазах? Усталость? Силу? Просто жизнь?"]},
-extra:{name:"Нейтральная черта",tag:"днём",why:"«У меня карие глаза» — это правда. Она не ранит. С неё начинается мир с отражением.",steps:["Найди одну черту которую можно описать без оценки","Форма ушей цвет глаз линия плеча","Скажи вслух — просто описание без «но»","Это факт о тебе. Не приговор."]},
-evening:"Что я увидела сегодня? Одно слово:",
-p:"Я увидела:"},
-
-{d:17,w:3,title:"Пережитый кризис",
-smysl:"Ты уже проходила через ад. Качество которое тебя спасло — это твой ресурс. Мы находим его и называем по имени. Это не прошлое — это твоё оружие.",
-task:"Вспомни один тяжёлый период который ты прошла. Зафиксируй: она его пережила. Это факт.",
-main:{name:"Один эпизод",tag:"утро",why:"Прошлое — не груз. Это архив твоей силы. Открой его и найди ту кто справилась.",steps:["Вспомни один тяжёлый период из прошлого","Запиши в двух предложениях: что было и как вышла","Не анализируй — просто зафиксируй","Она его пережила. Это случилось. Это факт."]},
-extra:{name:"Ресурс прошлого",tag:"днём",why:"Это не «повезло». Это твоё оружие. Упрямство любовь злость — что-то тогда работало на тебя.",steps:["Спроси себя: «Какое качество помогло мне тогда?»","Упрямство? Терпение? Умение находить выход? Любовь к детям?","Назови это одним словом","Это качество никуда не делось — оно в тебе"]},
-evening:"Какое качество меня спасло? Одно слово:",
-p:"Я пережила:"},
-
-{d:18,w:3,title:"Письмо себе",
-smysl:"Внутренний критик говорит от первого лица. Сегодня создаём внутреннего союзника который говорит от третьего. Это голос мудрого свидетеля который видит всю твою жизнь.",
-task:"Напиши короткое письмо себе от третьего лица. Начни: «Она сделала всё что могла...»",
-main:{name:"Письмо от третьего лица",tag:"утро",why:"Третье лицо даёт расстояние. Ты можешь увидеть себя без самообвинения — как видела бы подругу.",steps:["Напиши «Дорогая [имя]...» или «Она...»","Продолжи: «Она сделала всё что могла в тех условиях которые у неё были»","Пиши как мудрый друг который знает всю историю","Хоть три предложения — этого достаточно"]},
-extra:{name:"Чтение вслух",tag:"вечер",why:"Когда ты читаешь добрые слова вслух — тело слышит их иначе чем при чтении. Оно верит голосу.",steps:["Прочитай письмо вслух","Медленно","Заметь что изменилось в теле когда слышишь это голосом","Это ты говоришь правду о себе"]},
-evening:"Что изменилось когда прочитала вслух? Одно слово:",
-p:"Моё письмо:"},
-
-{d:19,w:3,title:"Навык из прошлого",
-smysl:"Ты не начинаешь с нуля. У тебя есть компетентность которая работала раньше и будет работать снова. Мы достаём её из-под завалов стыда.",
-task:"Вспомни один навык из прошлого который был у тебя и который ты хочешь вернуть.",
-main:{name:"Раскопки",tag:"утро",why:"Где-то под слоем «я не могу» лежит «я умела». Найди это и стряхни пыль.",steps:["Вспомни что ты умела делать раньше — и что приносило результат или удовольствие","Работа с людьми? Письмо? Организация? Готовка? Рисование?","Запиши это","Он был. Он твой. Он никуда не ушёл."]},
-extra:{name:"Одно маленькое применение",tag:"днём",why:"Даже одно маленькое применение — и навык снова твой. Он не ждал в стороне — он ждал в тебе.",steps:["Примени этот навык в самом маленьком виде","Написать одно предложение если писала","Объяснить что-то если объясняла","Организовать одну полку если организовывала"]},
-evening:"Что этот навык говорит обо мне? Одно слово:",
-p:"Навык который я хочу вернуть:"},
-
-{d:20,w:3,title:"Что у меня есть",
-smysl:"Когда нет денег кажется что нет ничего. Но есть нематериальные ресурсы — то что не купишь. Увидеть их — значит перестать чувствовать себя пустой.",
-task:"Составь список из 5 вещей которые у тебя есть прямо сейчас. Не материальных — качества знания опыт.",
-main:{name:"Список нематериального",tag:"утро",why:"Дыхание умение читать память о дожде — это нельзя купить но это твоё. Перечисли — и бедность отступит.",steps:["Напиши 5 пунктов начиная с «У меня есть...»","Не вещи и деньги — качества способности знания","«Я умею слышать людей»","«У меня есть терпение»","«Я знаю как выжить когда совсем плохо»"]},
-extra:{name:"Проговаривание вслух",tag:"вечер",why:"Произнеси каждое и скажи «это моё». Голос закрепляет право на обладание.",steps:["Прочитай список вслух","После каждого пункта скажи: «Это моё»","Медленно","Почувствуй — это правда"]},
-evening:"Что из этого точно моё? Одно слово:",
-p:"Пять вещей которые у меня есть:"},
-
-{d:21,w:3,title:"Кто эта женщина",
-smysl:"Три недели назад ты была набором чужих «должна». Сегодня ты описываешь себя без них. Это первый автопортрет написанный не Сторожем а тобой.",
-task:"Перечитай всё что писала за 21 день. Потом ответь: «Кто эта женщина?» — без слова «должна».",
-main:{name:"Перечитывание всего пути",tag:"утро",why:"Ты прошла 21 день. Ты — не та женщина что начинала. Дай себе увидеть дистанцию.",steps:["Открой все свои заметки","Читай медленно — всё","Не оценивай — просто наблюдай","Кто эта женщина которая писала всё это?"]},
-extra:{name:"Портрет без «должна»",tag:"вечер",why:"Три предложения без «надо» и «обязана». Это твой автопортрет. Первый написанный тобой.",steps:["Напиши три предложения начиная с «Я — женщина которая...»","Ни одного слова «должна» «надо» «обязана»","Без извинений","Просто — кто она"]},
-evening:"Кто эта женщина? Одно слово:",
-p:"Эта женщина —"}
+{d:1,w:1,title:'Рука на груди',task:'Утром положи руку на грудь. Два медленных вдоха. Одно слово — что сейчас есть в теле? Тяжесть. Пустота. Тепло. Ничего. Без оценки — просто зафиксируй и запиши одно слово.',why:'Тело знает правду раньше головы. Это не упражнение — это просто проверка связи.',p:'Моё слово сегодня:'},
+{d:2,w:1,title:'Считать «должна»',task:'Весь день замечай в голове «должна», «надо», «обязана». Не борись с ними — просто считай. Вечером запиши цифру.',why:'Сначала нужно увидеть сколько чужих голосов живёт внутри. Без этого счёта не понять где ты а где они.',p:'Сколько раз я услышала «должна»:'},
+{d:3,w:1,title:'Одна любимая вещь',task:'Найди в комнате одну вещь которая нравится именно тебе. Не потому что подарили не потому что «так принято». Просто нравится — форма цвет ощущение. Посмотри на неё молча одну минуту.',why:'Это тренировка различать своё и чужое. Начать можно с вещи — так проще чем с желаний.',p:'Это была:'},
+{d:4,w:1,title:'Любимый запах',task:'Вспомни один запах который ты любила — в детстве в другое время в другом месте. Хвоя. Ваниль. Дождь. Старые книги. Можно ли сегодня найти что-то похожее?',why:'Запах — самый прямой путь к себе. Он обходит голову и идёт прямо к памяти тела.',p:'Запах который я вспомнила:'},
+{d:5,w:1,title:'Свой вкус',task:'Сегодня один раз поешь или выпьешь то чего хочет тело прямо сейчас. Не что есть. Не что удобно. Что хочется — горячее холодное сладкое? Следуй за этим.',why:'Выбор еды — самый доступный способ вернуть контакт с собственными желаниями.',p:'Я выбрала:'},
+{d:6,w:1,title:'Три факта',task:'Напиши три факта о себе. Только факты — не оценки. Не «я хорошая мама» — это оценка. «Я умею варить борщ» — это факт. «Я знаю дорогу в парк». «Я пережила этот день».',why:'Самооценка строится на фундаменте фактов а не оценок. Начинаем строить.',p:'Мои три факта:'},
+{d:7,w:1,title:'Итог первой недели',task:'Перечитай всё что написала за эту неделю. Один вопрос: был ли хоть один момент где ты услышала именно себя — не чужой голос не «должна» а своё? Запиши этот момент.',why:'Первая неделя сделана. Семя посажено. Росток пробился сквозь землю — это уже произошло.',p:'Момент где я услышала себя:'},
+{d:8,w:2,title:'Мой выбор',task:'Сегодня сделай один маленький выбор только для себя. Какую чашку взять. Куда сесть. В каком порядке делать дела. Что угодно — главное что это именно твоё решение а не «как принято».',why:'Воля восстанавливается через действие. Не через понимание — через действие. Одно маленькое — достаточно.',p:'Мой выбор сегодня:'},
+{d:9,w:2,title:'10 минут',task:'Когда кто-то попросит тебя что-то сделать — ответь: «Я сделаю через 10 минут». И засеки. Не объясняй почему. Просто пауза между чужим импульсом и твоим ответом.',why:'Эта пауза — не отказ. Это пространство где ты существуешь. Оно твоё по праву.',p:'Как прошло:'},
+{d:10,w:2,title:'Выйти без цели',task:'Выйди на улицу на 5–10 минут. Без цели без дела без списка. Просто потому что тело хочет пространства и воздуха. Можно просто постоять у подъезда.',why:'Тело знает что мир больше комнаты. Напомни ему об этом.',p:'Что я заметила:'},
+{d:11,w:2,title:'Моё умение',task:'Найди одно конкретное умение которое есть только у тебя. Не роль («я мать») не оценку («я добрая»). Конкретное: «Я умею слышать когда человеку плохо раньше чем он скажет». «Я умею найти выход когда денег нет».',why:'Это не похвальба. Это инвентаризация. Ты идёшь дальше — нужно знать что берёшь с собой.',p:'Моё умение:'},
+{d:12,w:2,title:'Одно отложенное дело',task:'Сделай одно маленькое дело которое откладывалось. Переставить вещь. Выбросить старое. Написать сообщение. Важен не масштаб — важно что ты выбрала это сама.',why:'Каждое завершённое дело возвращает немного энергии обратно. Не тратит — возвращает.',p:'Я сделала:'},
+{d:13,w:2,title:'Без объяснений',task:'Один раз сегодня прими решение и не объясняй его. Просто сделай — или не делай. Без «потому что» без оправданий без извинений. Своё решение не нуждается в защите.',why:'Привычка оправдываться — это привычка просить разрешения жить. Сегодня — без разрешения.',p:'Что это было:'},
+{d:14,w:2,title:'Итог второй недели',task:'Перечитай записи второй недели. Один вопрос: какое действие было по-настоящему твоим? Без давления без страха без «надо». Запиши одним предложением.',why:'Две недели позади. Дерево стоит. У него уже есть ветки — это твои решения. Они держат.',p:'Моё действие этой недели:'},
+{d:15,w:3,title:'Я справилась',task:'Напиши одно предложение: «Я справилась с ____». Что угодно. Вышла из дома. Ответила на трудное сообщение. Выжила в тяжёлый день. Не нужен героизм — нужен факт.',why:'Самооценка строится не на достижениях — она строится на свидетельстве. Будь своим свидетелем.',p:'Я справилась с:'},
+{d:16,w:3,title:'Зеркало',task:'Посмотри на своё лицо в зеркало и найди одну черту которая просто есть. Не хорошую не плохую — нейтральную. Форма ушей. Цвет глаз. Линия плеча. Просто факт без приговора.',why:'Зеркало — не суд. Это просто отражение. Ты можешь смотреть на него без оценки.',p:'Я увидела:'},
+{d:17,w:3,title:'Пережитый кризис',task:'Вспомни один тяжёлый период из прошлого который ты прошла. Не анализируй. Просто зафиксируй: она его пережила. Это случилось. Это факт — и это ресурс который никуда не делся.',why:'Всё что ты пережила — это доказательство твоей силы. Не нужно её искать. Она уже была.',p:'Я пережила:'},
+{d:18,w:3,title:'Письмо себе',task:'Напиши короткое письмо себе от третьего лица. Начни: «Она сделала всё что могла в тех условиях которые были у неё тогда». Продолжи как захочешь. Третье лицо даёт расстояние и убирает самообвинение.',why:'Ты можешь быть справедливым свидетелем для других. Теперь — для себя.',p:'Моё письмо:'},
+{d:19,w:3,title:'Навык из прошлого',task:'Найди один навык или способность которая у тебя была и которую ты хочешь вернуть. Не обязательно возвращать прямо сейчас. Просто признай: он был. Он твой. Он никуда не делся.',why:'Ничто из того что ты умела — не исчезло. Оно в архиве не в корзине.',p:'Навык который я хочу вернуть:'},
+{d:20,w:3,title:'Что у меня есть',task:'Составь список из пяти вещей которые у тебя есть прямо сейчас. Не материальных. Качества способности знания опыт. «Я умею слушать». «Я знаю как выживать». «У меня есть терпение».',why:'Инвентаризация перед следующим шагом. Ты идёшь не с пустыми руками.',p:'Пять вещей:'},
+{d:21,w:3,title:'Кто эта женщина',task:'Перечитай всё что написала за 21 день. Потом ответь: «Кто эта женщина?». Пиши без слова «должна». Без чужих голосов. Без извинений. Просто — кто она.',why:'Дерево расцвело. Это ты вырастила его. Из семени — сама. Своими руками.',p:'Эта женщина —'}
 ];
 
-// ══════════════════════════════════════
-// TREE SVG
-// ══════════════════════════════════════
-function tree(progress,wilting){
-  const p=Math.max(0,Math.min(21,progress|0)),w=!!wilting;
-  const lc=w?"#6a8030":"#4aaa50",ld=w?"#4a6020":"#38a040",ll=w?"#8aa040":"#64cc5a",tc="#7a4f2a";
-  const wf=w?"filter=\"url(#wf)\"":"",op=t=>p>=t?1:0;
-  const buds=[[80,222],[64,216],[174,222],[194,216],[120,170],[140,170],[130,128],[97,185],[163,185]];
-  const fls=[[80,220],[64,214],[174,220],[194,214],[120,168],[140,168],[130,126],[97,183],[163,183],[72,223],[188,223],[112,210],[148,210],[100,192],[160,192]];
-  const bH=buds.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4" fill="#e8a8c0" opacity=".85"/>`).join("");
-  const fH=fls.map(([x,y])=>`<g transform="translate(${x},${y})"><circle cx="0" cy="-5.5" r="3.5" fill="#f5b8cc"/><circle cx="5.2" cy="-2.5" r="3.5" fill="#f5c0d4"/><circle cx="5.2" cy="2.5" r="3.5" fill="#f5b8cc"/><circle cx="0" cy="5.5" r="3.5" fill="#f5c0d4"/><circle cx="-5.2" cy="2.5" r="3.5" fill="#f5b8cc"/><circle cx="-5.2" cy="-2.5" r="3.5" fill="#f5c0d4"/><circle cx="0" cy="0" r="4" fill="#fff5a0"/></g>`).join("");
+// ═══════════════ TREE SVG ═══════════════
+
+function tree(progress, wilting) {
+  const p = Math.max(0, Math.min(21, progress|0));
+  const w = !!wilting;
+  const lc = w ? '#6a8030' : '#4aaa50';
+  const ld = w ? '#4a6020' : '#38a040';
+  const ll = w ? '#8aa040' : '#64cc5a';
+  const tc = '#7a4f2a';
+  const wf = w ? 'filter="url(#wf)"' : '';
+  const op = t => p >= t ? 1 : 0;
+
+  const buds = [[80,222],[64,216],[174,222],[194,216],[120,170],[140,170],[130,128],[97,185],[163,185]];
+  const fls  = [[80,220],[64,214],[174,220],[194,214],[120,168],[140,168],[130,126],[97,183],[163,183],[72,223],[188,223],[112,210],[148,210],[100,192],[160,192]];
+
+  const budHTML = buds.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4" fill="#e8a8c0" opacity=".85"/>`).join('');
+  const flHTML  = fls.map(([x,y])=>`<g transform="translate(${x},${y})"><circle cx="0" cy="-5.5" r="3.5" fill="#f5b8cc"/><circle cx="5.2" cy="-2.5" r="3.5" fill="#f5c0d4"/><circle cx="5.2" cy="2.5" r="3.5" fill="#f5b8cc"/><circle cx="0" cy="5.5" r="3.5" fill="#f5c0d4"/><circle cx="-5.2" cy="2.5" r="3.5" fill="#f5b8cc"/><circle cx="-5.2" cy="-2.5" r="3.5" fill="#f5c0d4"/><circle cx="0" cy="0" r="4" fill="#fff5a0"/></g>`).join('');
+
   return `<svg viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-<defs>${w?`<filter id="wf"><feColorMatrix type="saturate" values="0.3"/></filter>`:""}<radialGradient id="gr" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#5a3820"/><stop offset="100%" stop-color="#38200e"/></radialGradient></defs>
+<defs>${w?`<filter id="wf"><feColorMatrix type="saturate" values="0.3"/></filter>`:''}<radialGradient id="gr" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#5a3820"/><stop offset="100%" stop-color="#38200e"/></radialGradient></defs>
 <ellipse cx="130" cy="326" rx="118" ry="14" fill="url(#gr)"/>
 <rect x="0" y="326" width="260" height="20" fill="#38200e"/>
-<g opacity="${p===0?1:0}"><ellipse cx="130" cy="320" rx="11" ry="7" fill="#6b4a2a"/><ellipse cx="130" cy="318" rx="6" ry="3.5" fill="#9b7a5a" opacity=".45"/></g>
+<ellipse cx="78" cy="329" rx="22" ry="5" fill="#4a3020" opacity=".28"/>
+<ellipse cx="192" cy="330" rx="17" ry="4" fill="#4a3020" opacity=".22"/>
+<g opacity="${p===0?1:0}" style="transition:opacity 1s"><ellipse cx="130" cy="320" rx="11" ry="7" fill="#6b4a2a"/><ellipse cx="130" cy="318" rx="6" ry="3.5" fill="#9b7a5a" opacity=".45"/></g>
 <g opacity="${op(1)}" style="transition:opacity 1.5s"><line x1="130" y1="320" x2="130" y2="293" stroke="${lc}" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="121" cy="300" rx="9" ry="4.5" fill="${ll}" transform="rotate(-25 121 300)" ${wf}/><ellipse cx="139" cy="300" rx="9" ry="4.5" fill="${ll}" transform="rotate(25 139 300)" ${wf}/></g>
 <g opacity="${op(3)}" style="transition:opacity 1.5s"><line x1="130" y1="293" x2="130" y2="266" stroke="${lc}" stroke-width="3" stroke-linecap="round"/><ellipse cx="117" cy="276" rx="13" ry="6.5" fill="${ld}" transform="rotate(-28 117 276)" ${wf}/><ellipse cx="143" cy="276" rx="13" ry="6.5" fill="${ld}" transform="rotate(28 143 276)" ${wf}/><ellipse cx="119" cy="262" rx="10" ry="5" fill="${lc}" transform="rotate(-15 119 262)" ${wf}/><ellipse cx="141" cy="262" rx="10" ry="5" fill="${lc}" transform="rotate(15 141 262)" ${wf}/></g>
-<g opacity="${op(5)}" style="transition:opacity 1.5s"><path d="M126,326 Q124,296 126,264 Q128,244 130,222 Q132,244 134,264 Q136,296 134,326 Z" fill="${tc}"/><line x1="130" y1="266" x2="130" y2="240" stroke="${lc}" stroke-width="2.5" stroke-linecap="round"/></g>
-<g opacity="${op(7)}" style="transition:opacity 1.5s"><path d="M130,266 Q112,252 95,240" stroke="${tc}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M130,266 Q148,252 165,240" stroke="${tc}" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="90" cy="234" rx="18" ry="10" fill="${ld}" ${wf}/><ellipse cx="82" cy="226" rx="13" ry="7" fill="${lc}" ${wf}/><ellipse cx="98" cy="226" rx="12" ry="6.5" fill="${ll}" ${wf}/><ellipse cx="90" cy="219" rx="11" ry="6" fill="${lc}" ${wf}/><ellipse cx="168" cy="234" rx="18" ry="10" fill="${ld}" ${wf}/><ellipse cx="176" cy="226" rx="13" ry="7" fill="${lc}" ${wf}/><ellipse cx="161" cy="226" rx="12" ry="6.5" fill="${ll}" ${wf}/><ellipse cx="168" cy="219" rx="11" ry="6" fill="${lc}" ${wf}/><ellipse cx="130" cy="233" rx="14" ry="8" fill="${lc}" ${wf}/><ellipse cx="122" cy="225" rx="11" ry="6.5" fill="${ld}" ${wf}/><ellipse cx="138" cy="225" rx="11" ry="6.5" fill="${ll}" ${wf}/><ellipse cx="130" cy="218" rx="12" ry="7" fill="${lc}" ${wf}/></g>
+<g opacity="${op(5)}" style="transition:opacity 1.5s"><path d="M126,326 Q124,296 126,264 Q128,244 130,222 Q132,244 134,264 Q136,296 134,326 Z" fill="${tc}"/><path d="M129,326 Q128,296 129,264 Q129.5,244 130,226" stroke="#9a6f4a" stroke-width="1" fill="none" opacity=".25"/><line x1="130" y1="266" x2="130" y2="240" stroke="${lc}" stroke-width="2.5" stroke-linecap="round"/></g>
+<g opacity="${op(7)}" style="transition:opacity 1.5s"><path d="M130,266 Q112,252 95,240" stroke="${tc}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M130,266 Q148,252 165,240" stroke="${tc}" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="90" cy="234" rx="18" ry="10" fill="${ld}" ${wf}/><ellipse cx="82" cy="226" rx="13" ry="7" fill="${lc}" ${wf}/><ellipse cx="98" cy="226" rx="12" ry="6.5" fill="${ll}" ${wf}/><ellipse cx="90" cy="219" rx="11" ry="6" fill="${lc}" ${wf}/><ellipse cx="168" cy="234" rx="18" ry="10" fill="${ld}" ${wf}/><ellipse cx="176" cy="226" rx="13" ry="7" fill="${lc}" ${wf}/><ellipse cx="161" cy="226" rx="12" ry="6.5" fill="${ll}" ${wf}/><ellipse cx="168" cy="219" rx="11" ry="6" fill="${lc}" ${wf}/><ellipse cx="130" cy="233" rx="14" ry="8" fill="${lc}" ${wf}/><ellipse cx="122" cy="225" rx="11" ry="6.5" fill="${ld}" ${wf}/><ellipse cx="138" cy="225" rx="11" ry="6.5" fill="${ll}" ${wf}/><ellipse cx="130" cy="218" rx="12" ry="7" fill="${lc}" ${wf}/><ellipse cx="130" cy="210" rx="9" ry="5.5" fill="${ld}" ${wf}/></g>
 <g opacity="${op(10)}" style="transition:opacity 1.5s"><line x1="130" y1="240" x2="130" y2="208" stroke="${tc}" stroke-width="2" stroke-linecap="round"/><path d="M130,230 Q110,217 90,206" stroke="${tc}" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M130,230 Q150,217 170,206" stroke="${tc}" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="85" cy="200" rx="20" ry="11" fill="${lc}" ${wf}/><ellipse cx="77" cy="192" rx="14" ry="8" fill="${ld}" ${wf}/><ellipse cx="93" cy="192" rx="13" ry="7.5" fill="${ll}" ${wf}/><ellipse cx="85" cy="185" rx="12" ry="7" fill="${lc}" ${wf}/><ellipse cx="173" cy="200" rx="20" ry="11" fill="${lc}" ${wf}/><ellipse cx="181" cy="192" rx="14" ry="8" fill="${ld}" ${wf}/><ellipse cx="165" cy="192" rx="13" ry="7.5" fill="${ll}" ${wf}/><ellipse cx="173" cy="185" rx="12" ry="7" fill="${lc}" ${wf}/><ellipse cx="130" cy="202" rx="20" ry="11" fill="${ll}" ${wf}/><ellipse cx="120" cy="194" rx="15" ry="9" fill="${lc}" ${wf}/><ellipse cx="140" cy="194" rx="15" ry="9" fill="${ld}" ${wf}/><ellipse cx="130" cy="186" rx="16" ry="9" fill="${lc}" ${wf}/><ellipse cx="122" cy="178" rx="12" ry="7" fill="${ld}" ${wf}/><ellipse cx="138" cy="178" rx="12" ry="7" fill="${ll}" ${wf}/><ellipse cx="130" cy="171" rx="13" ry="7.5" fill="${lc}" ${wf}/></g>
-<g opacity="${op(13)}" style="transition:opacity 1.5s"><path d="M130,260 Q105,246 78,236" stroke="${tc}" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M130,260 Q155,246 182,236" stroke="${tc}" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="72" cy="231" rx="19" ry="10" fill="${ld}" ${wf}/><ellipse cx="64" cy="223" rx="13" ry="7.5" fill="${lc}" ${wf}/><ellipse cx="80" cy="223" rx="12" ry="7" fill="${ll}" ${wf}/><ellipse cx="186" cy="231" rx="19" ry="10" fill="${ld}" ${wf}/><ellipse cx="194" cy="223" rx="13" ry="7.5" fill="${lc}" ${wf}/><ellipse cx="178" cy="223" rx="12" ry="7" fill="${ll}" ${wf}/><ellipse cx="105" cy="215" rx="18" ry="10" fill="${ll}" ${wf}/><ellipse cx="155" cy="215" rx="18" ry="10" fill="${ll}" ${wf}/></g>
-<g opacity="${op(16)}" style="transition:opacity 1.5s"><ellipse cx="112" cy="222" rx="16" ry="9" fill="${lc}" ${wf}/><ellipse cx="148" cy="222" rx="16" ry="9" fill="${lc}" ${wf}/><ellipse cx="100" cy="196" rx="15" ry="8.5" fill="${ld}" ${wf}/><ellipse cx="160" cy="196" rx="15" ry="8.5" fill="${ld}" ${wf}/><ellipse cx="130" cy="149" rx="12" ry="7" fill="${ll}" ${wf}/><ellipse cx="130" cy="142" rx="9" ry="5.5" fill="${lc}" ${wf}/><ellipse cx="130" cy="135" rx="7" ry="4.5" fill="${ld}" ${wf}/></g>
-<g opacity="${op(19)}" style="transition:opacity 1.5s">${bH}</g>
-<g opacity="${op(21)}" style="transition:opacity 2.5s">${fH}</g>
+<g opacity="${op(13)}" style="transition:opacity 1.5s"><path d="M130,260 Q105,246 78,236" stroke="${tc}" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M130,260 Q155,246 182,236" stroke="${tc}" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="72" cy="231" rx="19" ry="10" fill="${ld}" ${wf}/><ellipse cx="64" cy="223" rx="13" ry="7.5" fill="${lc}" ${wf}/><ellipse cx="80" cy="223" rx="12" ry="7" fill="${ll}" ${wf}/><ellipse cx="186" cy="231" rx="19" ry="10" fill="${ld}" ${wf}/><ellipse cx="194" cy="223" rx="13" ry="7.5" fill="${lc}" ${wf}/><ellipse cx="178" cy="223" rx="12" ry="7" fill="${ll}" ${wf}/><ellipse cx="105" cy="215" rx="18" ry="10" fill="${ll}" ${wf}/><ellipse cx="155" cy="215" rx="18" ry="10" fill="${ll}" ${wf}/><ellipse cx="130" cy="164" rx="14" ry="8" fill="${ld}" ${wf}/><ellipse cx="130" cy="156" rx="11" ry="6.5" fill="${lc}" ${wf}/></g>
+<g opacity="${op(16)}" style="transition:opacity 1.5s"><ellipse cx="112" cy="222" rx="16" ry="9" fill="${lc}" ${wf}/><ellipse cx="148" cy="222" rx="16" ry="9" fill="${lc}" ${wf}/><ellipse cx="100" cy="196" rx="15" ry="8.5" fill="${ld}" ${wf}/><ellipse cx="160" cy="196" rx="15" ry="8.5" fill="${ld}" ${wf}/><ellipse cx="130" cy="149" rx="12" ry="7" fill="${ll}" ${wf}/><ellipse cx="130" cy="142" rx="9" ry="5.5" fill="${lc}" ${wf}/><ellipse cx="130" cy="135" rx="7" ry="4.5" fill="${ld}" ${wf}/><path d="M126,326 Q118,332 104,338" stroke="${tc}" stroke-width="1.5" fill="none" opacity=".45"/><path d="M134,326 Q142,332 156,338" stroke="${tc}" stroke-width="1.5" fill="none" opacity=".45"/></g>
+<g opacity="${op(19)}" style="transition:opacity 1.5s">${budHTML}</g>
+<g opacity="${op(21)}" style="transition:opacity 2.5s">${flHTML}<circle cx="110" cy="200" r="2.5" fill="#ffd060" opacity=".9"/><circle cx="150" cy="200" r="2.5" fill="#ffd060" opacity=".9"/><circle cx="130" cy="180" r="2.5" fill="#ffd060" opacity=".9"/></g>
 </svg>`;
 }
 
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
-const SK="mysad_v4";
-let S=(()=>{try{return JSON.parse(localStorage.getItem(SK))||def();}catch{return def();}})();
-function def(){return{name:"",plantedAt:null,completed:{},notes:{},friends:[],feelingsLog:[]};}
-function save(){localStorage.setItem(SK,JSON.stringify(S));}
+// ═══════════════ STATE ═══════════════
 
-let curTaskDay=null,fromScreen="h",timerInt=null;
-function getProgress(){return Object.keys(S.completed).filter(k=>S.completed[k]).length;}
-function getCurDay(){
-  if(!S.plantedAt)return 1;
+const SK = 'mysad_v3';
+let S = (() => { try { return JSON.parse(localStorage.getItem(SK)) || def(); } catch { return def(); } })();
+function def() { return {name:'',plantedAt:null,completed:{},notes:{},friends:[]}; }
+function save() { localStorage.setItem(SK, JSON.stringify(S)); }
+
+let curTaskDay = null;
+let fromScreen = 'h';
+let timerInt = null;
+
+function getProgress() { return Object.keys(S.completed).filter(k => S.completed[k]).length; }
+function getCurDay() {
+  if (!S.plantedAt) return 1;
   return Math.min(Math.max(Math.floor((Date.now()-S.plantedAt)/86400000)+1,1),21);
 }
-function getPrevIncomplete(){
-  const cur=getCurDay();
-  for(let i=1;i<cur;i++){if(!S.completed[i])return i;}
-  return null;
+function isWilting() {
+  const d = getCurDay();
+  if (S.completed[d]) return false;
+  return new Date().getHours() >= 18;
 }
-function isWilting(){const d=getCurDay();if(S.completed[d])return false;return new Date().getHours()>=18;}
-function getTimer(){
-  if(!S.plantedAt)return "";
-  const ms=Date.now()-S.plantedAt,d=Math.floor(ms/86400000),h=Math.floor((ms%86400000)/3600000),m=Math.floor((ms%3600000)/60000);
-  if(d>0)return `посажено ${d} дн. ${h} ч. назад`;
-  if(h>0)return `посажено ${h} ч. ${m} мин. назад`;
+function getTimer() {
+  if (!S.plantedAt) return '';
+  const ms = Date.now()-S.plantedAt;
+  const d = Math.floor(ms/86400000);
+  const h = Math.floor((ms%86400000)/3600000);
+  const m = Math.floor((ms%3600000)/60000);
+  if (d>0) return `посажено ${d} дн. ${h} ч. назад`;
+  if (h>0) return `посажено ${h} ч. ${m} мин. назад`;
   return `посажено ${m} мин. назад`;
 }
 
-// ══════════════════════════════════════
-// SCREENS
-// ══════════════════════════════════════
-function show(id){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById("s"+id).classList.add("active");
-  const noNav=["w","t"];
-  document.getElementById("nav").classList.toggle("vis",!noNav.includes(id));
-  document.querySelectorAll(".nb").forEach(b=>b.classList.remove("act"));
-  const nb=document.getElementById("nav-"+id);if(nb)nb.classList.add("act");
+// ═══════════════ SCREENS ═══════════════
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+id).classList.add('active');
+  const noNav=['w','t'];
+  document.getElementById('nav').classList.toggle('vis',!noNav.includes(id));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('act'));
+  const nb=document.getElementById('nav-'+id);
+  if(nb) nb.classList.add('act');
 }
-function navTo(id){
+
+function nav(id) {
   show(id);
-  if(id==="h")renderHome();
-  if(id==="d")renderDays();
-  if(id==="f")renderFeelings();
-  if(id==="g")renderGarden();
-}
-function goReturnDay(){
-  const d=getPrevIncomplete();if(d)openTask(d,"h");
+  if(id==='h') renderHome();
+  if(id==='d') renderDays();
+  if(id==='g') renderGarden();
 }
 
-// ══════════════════════════════════════
-// WELCOME
-// ══════════════════════════════════════
-document.getElementById("wtree").innerHTML=tree(0,false);
-const ni=document.getElementById("ni");
-ni.addEventListener("input",()=>{document.getElementById("startBtn").disabled=ni.value.trim().length<2;});
-ni.addEventListener("keydown",e=>{if(e.key==="Enter"&&ni.value.trim().length>=2)startApp();});
-function startApp(){
-  const name=ni.value.trim();if(name.length<2)return;
-  S.name=name;S.plantedAt=Date.now();save();initMain();
+// ═══════════════ WELCOME ═══════════════
+
+document.getElementById('wtree').innerHTML = tree(0, false);
+const ni = document.getElementById('ni');
+ni.addEventListener('input', ()=>{ document.getElementById('startBtn').disabled=ni.value.trim().length<2; });
+ni.addEventListener('keydown', e=>{ if(e.key==='Enter'&&ni.value.trim().length>=2) startApp(); });
+
+function startApp() {
+  const name = ni.value.trim();
+  if(name.length<2) return;
+  S.name=name; S.plantedAt=Date.now(); save();
+  initMain();
 }
 
-// ══════════════════════════════════════
-// INIT
-// ══════════════════════════════════════
-function initMain(){show("h");renderHome();renderDays();renderFeelings();renderGarden();startTick();}
-function startTick(){
-  if(timerInt)clearInterval(timerInt);
-  timerInt=setInterval(()=>{const te=document.getElementById("htimer");if(te)te.textContent=getTimer();refreshWilt();},60000);
+// ═══════════════ INIT ═══════════════
+
+function initMain() {
+  show('h'); renderHome(); renderDays(); renderGarden(); startTick();
 }
 
-// ══════════════════════════════════════
-// HOME
-// ══════════════════════════════════════
-function renderHome(){
-  const prog=getProgress(),curDay=getCurDay(),wilt=isWilting();
-  document.getElementById("hname").textContent=S.name||"—";
-  document.getElementById("hdnum").textContent=curDay;
-  document.getElementById("mainTree").innerHTML=tree(prog,wilt);
-  document.getElementById("pfill").style.width=(prog/21*100)+"%";
-  document.getElementById("pnum").textContent=prog+"/21";
-  document.getElementById("sname").textContent=STAGES[prog]||"";
-  document.getElementById("htimer").textContent=getTimer();
+function startTick() {
+  if(timerInt) clearInterval(timerInt);
+  timerInt = setInterval(()=>{
+    const te=document.getElementById('htimer'); if(te) te.textContent=getTimer();
+    refreshWilt();
+  }, 60000);
+}
+
+// ═══════════════ HOME ═══════════════
+
+function renderHome() {
+  const prog = getProgress();
+  const curDay = getCurDay();
+  const wilt = isWilting();
+  document.getElementById('hname').textContent = S.name||'—';
+  document.getElementById('hdnum').textContent = curDay;
+  document.getElementById('mainTree').innerHTML = tree(prog, wilt);
+  document.getElementById('pfill').style.width = (prog/21*100)+'%';
+  document.getElementById('pnum').textContent = prog+'/21';
+  document.getElementById('sname').textContent = STAGES[prog]||'';
+  document.getElementById('htimer').textContent = getTimer();
   refreshWilt();
-  const prev=getPrevIncomplete();
-  const rb=document.getElementById("retbanner");
-  if(prev&&prev<curDay){
-    rb.classList.add("show");
-    document.getElementById("rettext").textContent=`День ${prev} остался незавершённым — вернуться?`;
-  }else{rb.classList.remove("show");}
-  const td=DAYS[curDay-1];
-  if(td){
-    const done=!!S.completed[curDay];
-    document.getElementById("tctit").textContent=td.title;
-    document.getElementById("tcprev").textContent=td.smysl;
-    document.getElementById("tcrd").classList.toggle("dc",done);
-    const chk=document.getElementById("tcchk");
-    chk.classList.toggle("on",done);
-    chk.innerHTML=done?`<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`:"";
+  const td = DAYS[curDay-1];
+  if(td) {
+    const done = !!S.completed[curDay];
+    document.getElementById('tctit').textContent = td.title;
+    document.getElementById('tcprev').textContent = td.task;
+    document.getElementById('tcrd').classList.toggle('dc', done);
+    const chk = document.getElementById('tcchk');
+    chk.classList.toggle('on', done);
+    chk.innerHTML = done?`<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`:'';
   }
 }
-function refreshWilt(){
-  const w=isWilting(),el=document.getElementById("wmsg");if(!el)return;
-  el.classList.toggle("show",w);
-  if(w)el.textContent=WMSGS[Math.floor(Date.now()/86400000)%WMSGS.length];
-}
-function openToday(){openTask(getCurDay(),"h");}
 
-// ══════════════════════════════════════
-// TASK
-// ══════════════════════════════════════
-const WNS=["","Неделя 1 · Найти себя","Неделя 2 · Выбирать себя","Неделя 3 · Самооценка"];
-function openTask(day,from){
-  const dd=DAYS[day-1];if(!dd)return;
-  curTaskDay=day;fromScreen=from||"h";
-  document.getElementById("tdn").textContent=day;
-  document.getElementById("twkl").textContent=WNS[dd.w];
-  document.getElementById("ttit").textContent=dd.title;
-  const done=!!S.completed[day];
-  const note=S.notes[day]||"";
-  document.getElementById("tbody").innerHTML=buildTaskBody(dd,done,note);
-  document.getElementById("tbody").querySelector(".narea").oninput=function(){S.notes[day]=this.value;save();};
-  show("t");
+function refreshWilt() {
+  const w = isWilting();
+  const el = document.getElementById('wmsg');
+  if(!el) return;
+  el.classList.toggle('show', w);
+  if(w) el.textContent = WMSGS[Math.floor(Date.now()/86400000)%WMSGS.length];
 }
-function buildTaskBody(dd,done,note){
-  function techHTML(t,isMain){
-    const id="tech"+Math.random().toString(36).slice(2);
-    return `<div class="techcard${isMain?" main":""}">
-<div class="techhdr">
-  <div><div class="techname">${t.name}</div><div class="techwhy">${t.why}</div></div>
-  <span class="techtag">${t.tag}</span>
-</div>
-<button class="showsteps" onclick="toggleSteps('${id}',this)">
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-  Как делать
-</button>
-<div class="techsteps" id="${id}">
-  ${t.steps.map((s,i)=>`<div class="steprow"><div class="stepnum">${i+1}</div><div class="steptext">${s}</div></div>`).join("")}
-</div></div>`;
-  }
-  return `
-<div class="smyslbox">${dd.smysl}</div>
-${techHTML(dd.main,true)}
-${techHTML(dd.extra,false)}
-<div class="notesec">
-<label class="notelbl">${dd.p}</label>
-<textarea class="narea" placeholder="Пиши сюда..." rows="4">${note}</textarea>
-<button class="cbtn${done?" done":""}" id="cbtn" onclick="toggleComplete()">
-  <span id="cbtntxt">${done?"✓ Выполнено — нажми чтобы отменить":"Отметить выполненным"}</span>
-</button>
-</div>`;
+
+function openToday() { openTask(getCurDay(),'h'); }
+
+// ═══════════════ TASK ═══════════════
+
+const WNS = ['','Неделя 1 · Найти себя','Неделя 2 · Выбирать себя','Неделя 3 · Самооценка'];
+
+function openTask(day, from) {
+  const dd = DAYS[day-1]; if(!dd) return;
+  curTaskDay=day; fromScreen=from||'h';
+  document.getElementById('tdn').textContent=day;
+  document.getElementById('twkl').textContent=WNS[dd.w];
+  document.getElementById('ttit').textContent=dd.title;
+  document.getElementById('ttxt').textContent=dd.task;
+  document.getElementById('twhy').textContent=dd.why;
+  document.getElementById('tprompt').textContent=dd.p;
+  const na=document.getElementById('tnote');
+  na.value=S.notes[day]||'';
+  na.oninput=()=>{ S.notes[day]=na.value; save(); };
+  updateCompBtn(!!S.completed[day]);
+  show('t');
 }
-function toggleSteps(id,btn){
-  const el=document.getElementById(id);
-  el.classList.toggle("open");
-  btn.innerHTML=el.classList.contains("open")
-    ?`<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 9l-4-4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Скрыть`
-    :`<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Как делать`;
+
+function updateCompBtn(done) {
+  const btn=document.getElementById('cbtn');
+  const txt=document.getElementById('cbtntxt');
+  btn.classList.toggle('done',done);
+  txt.textContent=done?'✓ Выполнено — нажми чтобы отменить':'Отметить выполненным';
 }
-function toggleComplete(){
-  if(!curTaskDay)return;
+
+function toggleComplete() {
+  if(!curTaskDay) return;
   const was=!!S.completed[curTaskDay];
-  if(!was){
-    S.completed[curTaskDay]=Date.now();save();
-    const cbtn=document.getElementById("cbtn");
-    const ctxt=document.getElementById("cbtntxt");
-    if(cbtn)cbtn.classList.add("done");
-    if(ctxt)ctxt.textContent="✓ Выполнено — нажми чтобы отменить";
-    showEveningPrompt();
-    setTimeout(()=>{renderHome();renderDays();renderGarden();},150);
-  }else{
-    delete S.completed[curTaskDay];save();
-    const cbtn=document.getElementById("cbtn");
-    const ctxt=document.getElementById("cbtntxt");
-    if(cbtn)cbtn.classList.remove("done");
-    if(ctxt)ctxt.textContent="Отметить выполненным";
-    renderHome();renderDays();renderGarden();
+  if(!was) {
+    S.completed[curTaskDay]=Date.now(); save();
+    updateCompBtn(true);
+    showCel(getProgress());
+    setTimeout(()=>{ renderHome(); renderDays(); renderGarden(); },150);
+  } else {
+    delete S.completed[curTaskDay]; save();
+    updateCompBtn(false);
+    renderHome(); renderDays(); renderGarden();
   }
 }
-function closeTask(){navTo(fromScreen);}
 
-// ══════════════════════════════════════
-// EVENING PROMPT & FEELINGS MATCH
-// ══════════════════════════════════════
-function showEveningPrompt(){
-  const dd=DAYS[curTaskDay-1];if(!dd)return;
-  document.getElementById("mbox").innerHTML=`<div class="mpad">
-<div class="mtit">Вечерний вопрос</div>
-<div class="mtxt">${dd.evening}</div>
-<input type="text" class="minp big" id="eword" placeholder="одно слово" maxlength="30" autocomplete="off" spellcheck="false">
-<div class="mact">
-<button class="btnp" onclick="saveEveningWord()" style="max-width:none">Сохранить</button>
-<button class="btns" onclick="closeModal()">Пропустить</button>
-</div></div>`;
-  document.getElementById("modal").classList.add("open");
-  setTimeout(()=>{const el=document.getElementById("eword");if(el)el.focus();},150);
-  showCel(getProgress());
-}
-function saveEveningWord(){
-  const inp=document.getElementById("eword");if(!inp)return;
-  const word=inp.value.trim().toLowerCase();
-  if(!word){closeModal();return;}
-  const feeling=matchFeeling(word);
-  const entry={date:Date.now(),word:word,feeling:feeling?feeling.id:null,day:curTaskDay};
-  S.feelingsLog.unshift(entry);save();
-  if(feeling){
-    closeModal();
-    setTimeout(()=>showFeelingCard(feeling),200);
-  }else{
-    closeModal();
-  }
-}
-function matchFeeling(word){
-  const w=word.toLowerCase().trim();
-  for(const f of FEELINGS){
-    if(f.triggers.some(t=>w.includes(t)||t.includes(w)))return f;
-  }
-  return null;
-}
-function showFeelingCard(f){
-  document.getElementById("mbox").innerHTML=`
-<div class="fcard">
-<div class="fctop">
-  <span class="fcemo">${f.emoji}</span>
-  <div class="fcname">${f.name}</div>
-  <div class="fcshort">${f.short}</div>
-</div>
-<div class="fcsec">
-  <div class="fcslbl">Где в теле</div>
-  <div class="fcstext">${f.body}</div>
-</div>
-<div class="fcsec">
-  <div class="fcslbl">Что это значит</div>
-  <div class="fcstext">${f.philosophy}</div>
-</div>
-<div class="fcsec">
-  <div class="fcslbl">Практика — ${f.practice.name}</div>
-  ${f.practice.steps.map((s,i)=>`<div class="fcstep"><div class="fcstepnum">${i+1}</div><div class="fcstext">${s}</div></div>`).join("")}
-</div>
-<div class="fcstuck"><strong>Если застряла</strong>${f.stuck}</div>
-<div class="mpad" style="padding-top:0">
-<button class="btnp" onclick="closeModal()" style="max-width:none">Понятно</button>
-</div>
-</div>`;
-  document.getElementById("modal").classList.add("open");
+function closeTask() {
+  nav(fromScreen);
 }
 
-// ══════════════════════════════════════
-// CELEBRATION
-// ══════════════════════════════════════
-function showCel(prog){
-  const msg=prog===21?{i:"🌸",t:"Дерево расцвело!",x:"Ты прошла все 21 день. Ты вырастила это дерево сама. Из семени — своими руками."}:GMSGS[Math.floor(Math.random()*GMSGS.length)];
-  document.getElementById("celico").textContent=msg.i;
-  document.getElementById("celt").textContent=msg.t;
-  document.getElementById("celx").textContent=msg.x;
-  document.getElementById("cel").classList.add("show");
-}
-function hideCel(){document.getElementById("cel").classList.remove("show");}
+// ═══════════════ CELEBRATION ═══════════════
 
-// ══════════════════════════════════════
-// DAYS
-// ══════════════════════════════════════
-function renderDays(){
-  const cont=document.getElementById("dlist"),cur=getCurDay();
-  const weeks=[{w:1,lbl:"Неделя 1 · Найти себя"},{w:2,lbl:"Неделя 2 · Выбирать себя"},{w:3,lbl:"Неделя 3 · Самооценка"}];
-  cont.innerHTML=weeks.map(wk=>`<div class="wsec"><span class="wlbl">${wk.lbl}</span>
-${DAYS.filter(d=>d.w===wk.w).map(d=>{
-  const done=!!S.completed[d.d],locked=d.d>cur;
-  const prev=S.notes[d.d]?`"${S.notes[d.d].substring(0,34)}${S.notes[d.d].length>34?"...":""}"`:d.task.substring(0,36)+"...";
-  return `<div class="drow${locked?" lk":""}${done?" d"+d.w:""}" onclick="${locked?"":("openTask("+d.d+","+('"')+"d"+('"')+");")}">
-<div class="drn">${d.d}</div>
-<div class="dri"><div class="drt">${d.title}</div><div class="drp">${prev}</div></div>
-<div class="drck${done?" on":""}">${done?`<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`:""}</div>
-</div>`;}).join("")}</div>`).join("");
+function showCel(prog) {
+  const msg = prog===21
+    ? {i:'🌸',t:'Дерево расцвело!',x:'Ты прошла все 21 день. Ты вырастила это дерево сама. Из семени — своими руками.'}
+    : GMSGS[Math.floor(Math.random()*GMSGS.length)];
+  document.getElementById('celico').textContent=msg.i;
+  document.getElementById('celt').textContent=msg.t;
+  document.getElementById('celx').textContent=msg.x;
+  document.getElementById('cel').classList.add('show');
 }
+function hideCel() { document.getElementById('cel').classList.remove('show'); }
 
-// ══════════════════════════════════════
-// FEELINGS SCREEN
-// ══════════════════════════════════════
-function renderFeelings(){
-  const cont=document.getElementById("flist");
-  if(!S.feelingsLog||S.feelingsLog.length===0){
-    cont.innerHTML=`<div class="fempty"><big>💧</big>Здесь будут собираться твои чувства.<br><br>После каждого выполненного задания приложение спросит одно слово — что есть в теле.<br><br>Со временем ты увидишь свои паттерны.</div>`;
-    return;
-  }
-  const cloud={};
-  S.feelingsLog.forEach(e=>{if(e.feeling){cloud[e.feeling]=(cloud[e.feeling]||0)+1;}});
-  const cloudTags=Object.entries(cloud).sort((a,b)=>b[1]-a[1]).map(([id,count])=>{
-    const f=FEELINGS.find(x=>x.id===id);
-    if(!f)return "";
-    return `<span class="fcltag" onclick="showFeelingCard(FEELINGS.find(x=>x.id==='${id}'))">${f.emoji} ${f.name} ${count>1?"x"+count:""}</span>`;
-  }).join("");
-  const entries=S.feelingsLog.map(e=>{
-    const f=e.feeling?FEELINGS.find(x=>x.id===e.feeling):null;
-    const date=new Date(e.date);
-    const dstr=date.toLocaleDateString("ru-RU",{day:"numeric",month:"short"});
-    return `<div class="fentry" onclick="${f?("showFeelingCard(FEELINGS.find(x=>x.id==='"+f.id+"'))"):"void 0"}">
-<div class="femo">${f?f.emoji:"💭"}</div>
-<div class="fword">${e.word}</div>
-<div class="fdate">${dstr}</div>
-</div>`;
-  }).join("");
-  cont.innerHTML=(cloudTags?`<div class="fcloud">${cloudTags}</div>`:``)+"<div>"+entries+"</div>";
+// ═══════════════ DAYS ═══════════════
+
+function renderDays() {
+  const cont=document.getElementById('dlist');
+  const cur=getCurDay();
+  const weeks=[
+    {w:1,lbl:'Неделя 1 · Найти себя'},
+    {w:2,lbl:'Неделя 2 · Выбирать себя'},
+    {w:3,lbl:'Неделя 3 · Самооценка'}
+  ];
+  cont.innerHTML=weeks.map(wk=>`
+    <div class="wsec"><span class="wlbl">${wk.lbl}</span>
+    ${DAYS.filter(d=>d.w===wk.w).map(d=>{
+      const done=!!S.completed[d.d];
+      const locked=d.d>cur;
+      const note=S.notes[d.d]?`"${S.notes[d.d].substring(0,32)}${S.notes[d.d].length>32?'...':''}"`:d.task.substring(0,36)+'...';
+      return `<div class="drow${locked?' lk':''}${done?' d'+d.w:''}" onclick="${locked?'':('openTask('+d.d+',"d")')}">
+        <div class="drn">${d.d}</div>
+        <div class="dri"><div class="drt">${d.title}</div><div class="drp">${note}</div></div>
+        <div class="drck${done?' on':''}">${done?`<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`:''}</div>
+      </div>`;
+    }).join('')}</div>`).join('');
 }
 
-// ══════════════════════════════════════
-// GARDEN
-// ══════════════════════════════════════
-function renderGarden(){
-  const prog=getProgress(),wilt=isWilting();
-  const me=`<div class="gtc me"><div class="gtsvg">${tree(prog,wilt)}</div><div class="gtnm">${S.name||"—"}</div><div class="gtst">${STAGES[prog]}</div></div>`;
-  const friends=S.friends.map(f=>`<div class="gtc"><div class="gtsvg">${tree(f.p||0,false)}</div><div class="gtnm">${f.n}</div><div class="gtst">${STAGES[f.p||0]}</div></div>`).join("");
-  document.getElementById("ggrid").innerHTML=me+friends;
+// ═══════════════ GARDEN ═══════════════
+
+function renderGarden() {
+  const prog=getProgress(); const wilt=isWilting();
+  const me=`<div class="gtc me"><div class="gtsvg">${tree(prog,wilt)}</div><div class="gtnm">${S.name||'—'}</div><div class="gtst">${STAGES[prog]}</div></div>`;
+  const friends=S.friends.map(f=>`<div class="gtc"><div class="gtsvg">${tree(f.p||0,false)}</div><div class="gtnm">${f.n}</div><div class="gtst">${STAGES[f.p||0]}</div></div>`).join('');
+  document.getElementById('ggrid').innerHTML=me+friends;
 }
-function myCode(){return btoa(unescape(encodeURIComponent(JSON.stringify({n:S.name,p:getProgress(),t:Date.now()}))));}
-function openMyCode(){
+
+function myCode() {
+  return btoa(unescape(encodeURIComponent(JSON.stringify({n:S.name,p:getProgress(),t:Date.now()}))));
+}
+
+function openMyCode() {
   const code=myCode();
-  document.getElementById("mbox").innerHTML=`<div class="mpad"><div class="mtit">Мой код</div><div class="mtxt">Скопируй и отправь подруге. Она вставит его у себя в Саду и увидит твоё дерево. Обновляй код раз в несколько дней.</div><div class="mcode" id="codeBox" onclick="doCopy(\`${code}\`)">${code}</div><div class="mact"><button class="btnp" onclick="doCopy(\`${code}\`)" style="max-width:none">Скопировать</button><button class="btns" onclick="closeModal()">Закрыть</button></div></div>`;
-  document.getElementById("modal").classList.add("open");
+  document.getElementById('mbox').innerHTML=`<div class="mtit">Мой код</div><div class="mtxt">Скопируй и отправь подруге. Она вставит его у себя в Саду — и увидит твоё дерево. Обновляй код раз в несколько дней чтобы подруга видела актуальный прогресс.</div><div class="mcode" id="codeBox" onclick="doCopy(\`${code}\`)">${code}</div><div class="mact"><button class="btnp" onclick="doCopy(\`${code}\`)" style="max-width:none">Скопировать</button><button class="btns" onclick="closeModal()">Закрыть</button></div>`;
+  document.getElementById('modal').classList.add('open');
 }
-function doCopy(txt){
-  navigator.clipboard.writeText(txt).catch(()=>{const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);});
-  const box=document.getElementById("codeBox");if(box){box.style.color="var(--gold)";box.textContent="✓ Скопировано!";}
+
+function doCopy(txt) {
+  navigator.clipboard.writeText(txt).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=txt; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+  });
+  const box=document.getElementById('codeBox');
+  if(box){box.style.color='var(--gold)';box.textContent='✓ Скопировано!';}
 }
-function openAddFriend(){
-  document.getElementById("mbox").innerHTML=`<div class="mpad"><div class="mtit">Добавить подругу</div><div class="mtxt">Попроси подругу открыть Сад → «Поделиться своим деревом» → скопировать код и отправить тебе. Вставь код сюда.</div><input type="text" class="minp" id="fc" placeholder="Вставь код сюда..." autocomplete="off" spellcheck="false"><div class="merr" id="ferr">Код не распознан. Попробуй снова.</div><div class="mact"><button class="btnp" onclick="addFriend()" style="max-width:none">Добавить</button><button class="btns" onclick="closeModal()">Отмена</button></div></div>`;
-  document.getElementById("modal").classList.add("open");
-  setTimeout(()=>{const fc=document.getElementById("fc");if(fc)fc.focus();},100);
+
+function openAddFriend() {
+  document.getElementById('mbox').innerHTML=`<div class="mtit">Добавить подругу</div><div class="mtxt">Попроси подругу открыть Сад → нажать «Поделиться своим деревом» → скопировать код и отправить тебе. Вставь код сюда.</div><input type="text" class="minp" id="fc" placeholder="Вставь код сюда..." autocomplete="off" spellcheck="false"><div class="merr" id="ferr">Код не распознан. Попробуй снова.</div><div class="mact"><button class="btnp" onclick="addFriend()" style="max-width:none">Добавить</button><button class="btns" onclick="closeModal()">Отмена</button></div>`;
+  document.getElementById('modal').classList.add('open');
+  setTimeout(()=>{const fc=document.getElementById('fc');if(fc)fc.focus();},100);
 }
-function addFriend(){
-  const inp=document.getElementById("fc");if(!inp)return;
-  try{
+
+function addFriend() {
+  const inp=document.getElementById('fc'); if(!inp) return;
+  try {
     const data=JSON.parse(decodeURIComponent(escape(atob(inp.value.trim()))));
-    if(!data.n)throw new Error("bad");
+    if(!data.n) throw new Error('bad');
     const ex=S.friends.findIndex(f=>f.n===data.n);
     if(ex>=0){S.friends[ex].p=data.p||0;}else{S.friends.push({n:data.n,p:data.p||0});}
-    save();closeModal();renderGarden();
-  }catch{const e=document.getElementById("ferr");if(e)e.style.display="block";}
+    save(); closeModal(); renderGarden();
+  } catch {
+    const e=document.getElementById('ferr'); if(e) e.style.display='block';
+  }
 }
 
-// ══════════════════════════════════════
-// MODAL
-// ══════════════════════════════════════
-function closeMBG(e){if(e.target===document.getElementById("modal"))closeModal();}
-function closeModal(){document.getElementById("modal").classList.remove("open");}
+// ═══════════════ MODAL ═══════════════
 
-// ══════════════════════════════════════
-// BOOT
-// ══════════════════════════════════════
-if(S.name&&S.plantedAt){initMain();}else{show("w");}
-if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{});}
+function closeMBG(e) { if(e.target===document.getElementById('modal')) closeModal(); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+// ═══════════════ BOOT ═══════════════
+
+if(S.name&&S.plantedAt){initMain();}else{show('w');}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 </script>
 </body>
 </html>
