@@ -183,7 +183,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 #nav{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--brd);display:none;padding-bottom:var(--sb)}
 #nav.vis{display:flex}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 2px;background:none;border:none;cursor:pointer;gap:3px}
-.ni{font-size:20px;line-height:1}.nl{font-size:9px;letter-spacing:.3px;color:var(--dm);text-transform:uppercase;font-weight:500}
+.ni{font-size:20px;line-height:1}.nl{font-size:8px;letter-spacing:.2px;color:var(--dm);text-transform:uppercase;font-weight:500}
 .nb.act .nl{color:var(--gr);font-weight:700}
 .mbg{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:flex-end;justify-content:center;z-index:100;padding-bottom:var(--sb)}
 .mbg.open{display:flex}
@@ -204,9 +204,15 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .celt{font-size:30px;font-weight:700;color:var(--cr);margin-bottom:12px}
 .celx{font-size:16px;color:var(--tx);line-height:1.6;margin-bottom:26px}
 @keyframes bi{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
-/* Анимация капли полива */
-.drop-anim{position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;z-index:10;animation:dropFall .8s ease-in forwards}
-@keyframes dropFall{0%{top:5%;opacity:1}70%{top:78%;opacity:1}85%{top:82%;opacity:.6;transform:translateX(-50%) scaleY(.4) scaleX(1.6)}100%{top:82%;opacity:0}}
+/* Анимация капли полива — фиксированный слой */
+#drop-overlay{position:fixed;inset:0;pointer-events:none;z-index:300;overflow:hidden}
+.drop-svg{position:absolute;left:50%;transform:translateX(-50%);animation:dropFall 1s cubic-bezier(.4,0,.6,1) forwards}
+@keyframes dropFall{
+  0%  {top:-40px;opacity:1;transform:translateX(-50%) scaleY(1) scaleX(1)}
+  75% {top:75vh;opacity:1;transform:translateX(-50%) scaleY(1) scaleX(1)}
+  88% {top:80vh;opacity:.7;transform:translateX(-50%) scaleY(.35) scaleX(1.8)}
+  100%{top:80vh;opacity:0;transform:translateX(-50%) scaleY(.1) scaleX(2.2)}
+}
 </style>
 </head>
 <body>
@@ -296,14 +302,27 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 </div>
 </div>
 
-<!-- NAV 5 tabs -->
+<!-- GARDEN -->
+<div id="sg" class="screen">
+<div class="ghdr"><div class="stit">Сад</div><button class="addbtn" onclick="openAddFriend()">+ Подруга</button></div>
+<div class="scrl">
+  <button class="mkcbtn" onclick="openMyCode()">🌱 Поделиться своим деревом</button>
+  <div class="ggrid" id="ggrid"></div>
+</div>
+</div>
+
+<!-- NAV 6 tabs -->
 <nav id="nav">
   <button class="nb act" id="nav-h" onclick="navTo('h')"><span class="ni">🌱</span><span class="nl">Дерево</span></button>
   <button class="nb" id="nav-d" onclick="navTo('d')"><span class="ni">📋</span><span class="nl">Дни</span></button>
   <button class="nb" id="nav-f" onclick="navTo('f')"><span class="ni">💧</span><span class="nl">Чувства</span></button>
   <button class="nb" id="nav-j" onclick="navTo('j')"><span class="ni">📖</span><span class="nl">Дневник</span></button>
   <button class="nb" id="nav-m" onclick="navTo('m')"><span class="ni">🏃</span><span class="nl">Движение</span></button>
+  <button class="nb" id="nav-g" onclick="navTo('g')"><span class="ni">🌿</span><span class="nl">Сад</span></button>
 </nav>
+
+<!-- DROP OVERLAY для анимации полива -->
+<div id="drop-overlay"></div>
 
 <!-- MODAL -->
 <div class="mbg" id="modal" onclick="closeMBG(event)">
@@ -473,6 +492,7 @@ function navTo(id){
   if(id==="f")renderFeelings();
   if(id==="j")renderDiary();
   if(id==="m")renderMovement();
+  if(id==="g")renderGarden();
 }
 function goReturnDay(){const d=getPrevIncomplete();if(d)openTask(d,"h");}
 
@@ -892,24 +912,27 @@ function cancelMovement(type){
   save();closeModal();renderMovement();renderHome();
 }
 function playDropAnimation(cb){
-  const wrap=document.getElementById("mainTree");if(!wrap)return cb&&cb();
-  const drop=document.createElement("div");
-  drop.className="drop-anim";
-  drop.style.position="absolute";
-  // SVG капли
-  drop.innerHTML=`<svg width="28" height="36" viewBox="0 0 28 36" fill="none">
-<path d="M14 2 Q20 10 24 18 Q28 26 22 30 Q18 34 14 34 Q10 34 6 30 Q0 26 4 18 Q8 10 14 2Z" fill="#4a9ad4" opacity=".85"/>
-<ellipse cx="10" cy="16" rx="3" ry="5" fill="white" opacity=".3" transform="rotate(-20 10 16)"/>
+  const overlay=document.getElementById("drop-overlay");
+  if(!overlay){if(cb)cb();return;}
+  // Несколько капель с задержкой
+  const drops=[{delay:0,x:48},{delay:180,x:52},{delay:90,x:50}];
+  let done=0;
+  drops.forEach(({delay,x})=>{
+    const drop=document.createElement("div");
+    drop.className="drop-svg";
+    drop.style.left=x+"%";
+    drop.style.animationDelay=delay+"ms";
+    drop.innerHTML=`<svg width="22" height="30" viewBox="0 0 28 36" fill="none">
+<path d="M14 2 Q20 10 24 18 Q28 26 22 30 Q18 34 14 34 Q10 34 6 30 Q0 26 4 18 Q8 10 14 2Z" fill="#4a9ad4" opacity=".9"/>
+<ellipse cx="10" cy="15" rx="3" ry="5" fill="white" opacity=".35" transform="rotate(-20 10 15)"/>
 </svg>`;
-  // Родитель должен быть relative
-  const parent=wrap.parentElement;
-  const old=parent.style.position;
-  parent.style.position="relative";
-  parent.appendChild(drop);
-  drop.addEventListener("animationend",()=>{
-    drop.remove();
-    parent.style.position=old||"";
-    if(cb)cb();
+    overlay.appendChild(drop);
+    const totalMs=delay+1000;
+    setTimeout(()=>{
+      drop.remove();
+      done++;
+      if(done===drops.length&&cb)cb();
+    },totalMs+100);
   });
 }
 function addMovement(type){saveMovement(type);}// совместимость
@@ -930,9 +953,9 @@ function renderMvWeek(){
 // GARDEN
 // ══════════════════════════════
 function renderGarden(){
-  const prog=getProgress(),wilt=isWilting(),ac=getAppleCount(),aw=isApplesWithered();
-  const me=`<div class="gtc me"><div class="gtsvg">${tree(prog,wilt,ac,aw)}</div><div class="gtnm">${S.name||"—"}</div><div class="gtst">${STAGES[prog]}</div></div>`;
-  const friends=(S.friends||[]).map(f=>`<div class="gtc"><div class="gtsvg">${tree(f.p||0,false,0,false)}</div><div class="gtnm">${f.n}</div><div class="gtst">${STAGES[f.p||0]}</div></div>`).join("");
+  const prog=getProgress(),wilt=isWilting(),wet=isGroundWet();
+  const me=`<div class="gtc me"><div class="gtsvg">${tree(prog,wilt,wet)}</div><div class="gtnm">${S.name||"—"}</div><div class="gtst">${STAGES[prog]}</div></div>`;
+  const friends=(S.friends||[]).map(f=>`<div class="gtc"><div class="gtsvg">${tree(f.p||0,false,false)}</div><div class="gtnm">${f.n}</div><div class="gtst">${STAGES[f.p||0]}</div></div>`).join("");
   document.getElementById("ggrid").innerHTML=me+friends;
 }
 function myCode(){return btoa(unescape(encodeURIComponent(JSON.stringify({n:S.name,p:getProgress(),t:Date.now()}))));}
