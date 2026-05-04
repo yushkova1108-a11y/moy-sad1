@@ -204,6 +204,9 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .celt{font-size:30px;font-weight:700;color:var(--cr);margin-bottom:12px}
 .celx{font-size:16px;color:var(--tx);line-height:1.6;margin-bottom:26px}
 @keyframes bi{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+/* Анимация капли полива */
+.drop-anim{position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;z-index:10;animation:dropFall .8s ease-in forwards}
+@keyframes dropFall{0%{top:5%;opacity:1}70%{top:78%;opacity:1}85%{top:82%;opacity:.6;transform:translateX(-50%) scaleY(.4) scaleX(1.6)}100%{top:82%;opacity:0}}
 </style>
 </head>
 <body>
@@ -325,7 +328,12 @@ const FEELINGS=[
 {id:"anxiety",name:"Тревога",emoji:"🌀",triggers:["тревога","беспокойство","волнение","не отпускает","крутится","не могу успокоиться","предчувствие","неопределённость","всё плохо","что-то случится","сжатие в животе","бабочки","прокручиваю","нет покоя","зажата","напряжена","жду плохого"],short:"Тревога — страх без конкретного объекта. Мозг ищет угрозу и не находит — и это само по себе пугает.",body:"Сжатие в животе или диафрагме. Дыхание поверхностное. Мысли скачут и не останавливаются.",philosophy:"Тревога — Воля которая хочет контролировать будущее. Но будущего нет — есть только этот момент.",practice:{name:"3–2–1 здесь",steps:["Назови вслух 3 вещи которые видишь прямо сейчас","Назови 2 звука которые слышишь","Назови 1 ощущение в теле прямо сейчас","Сделай медленный выдох — длиннее вдоха"]},stuck:"Вдох на 4 счёта — задержка на 4 — выдох на 6. Повтори 4 раза."},
 {id:"guilt",name:"Вина",emoji:"⚓",triggers:["вина","виновата","должна была","раскаяние","тяжесть на плечах","груз","ошибка","неправильно","подвела","зря","не так сделала","плохая мать","плохая дочь","не справилась","виню","моя вина","из-за меня","всё испортила"],short:"Вина говорит что ты могла поступить иначе. Но в тот момент с тем знанием — ты делала лучшее что могла.",body:"Тяжесть на плечах или груди. Голова опускается. Хочется исправить или наказать себя.",philosophy:"Хроническая вина — гнев направленный на себя. Ответственность — это признать и двигаться. Вина — это застрять.",practice:{name:"Письмо свидетеля",steps:["Напиши от лица мудрого друга который знает всю твою историю","Начни: «В той ситуации ты делала всё что могла»","Продолжи: «Ты не знала тогда того что знаешь сейчас»","Прочитай написанное вслух"]},stuck:"Честно спроси себя: «С тем знанием что у меня было тогда — могла ли я поступить иначе?»"},
 {id:"loneliness",name:"Одиночество",emoji:"🌙",triggers:["одиночество","одиноко","покинутость","холод в груди","тишина","никому не нужна","невидимая","чужая","не слышат","не понимают","нет рядом","брошена","не с кем","изоляция","отдельная","меня не видят","одна","пустота вокруг"],short:"Одиночество — боль разрыва связи. Оно говорит: мне нужен контакт. Это нормальная человеческая потребность.",body:"Холод в груди. Плечи опущены. Горло сжимается. Иногда физически болит в районе сердца.",philosophy:"Одиночество среди людей — самое острое. Это не значит что ты не нужна. Это значит что связь нарушена — и её можно восстановить.",practice:{name:"Контакт с собой и миром",steps:["Обними себя — буквально руками за плечи","Скажи: «Я здесь. Я с собой»","Потом подойди к окну или выйди","Найди один живой объект — и просто посмотри на него 1 минуту"]},stuck:"Напиши одному человеку — не «мне плохо» а просто «привет как ты». Маленький контакт разрывает изоляцию."},
-{id:"nothing",name:"Ничего не чувствую",emoji:"⬜",triggers:["ничего","пустота","не знаю","нормально","никак","всё равно","онемела","как робот","не чувствую","нет ничего","пусто","безразличие","не могу почувствовать","заморожена","пустая","отключилась","нет сил чувствовать","устала"],short:"Ничего не чувствовать — это тоже чувство. Это защита психики когда боли было слишком много.",body:"Тело как будто далеко. Движения механические. Нет ни радости ни боли. Иногда лёгкое онемение.",philosophy:"Эмоциональная анестезия — не поломка. Это Воля которая выключила боль чтобы выжить. Она включится снова — когда почувствует себя в безопасности.",practice:{name:"Разбудить тело",steps:["Потри ладони друг о друга сильно — 20 секунд","Положи тёплые ладони на лицо","Почувствуй тепло — это контакт","Спроси: «Где в теле хоть что-то есть?»"]},stuck:"Холодная вода на запястья или контрастный душ начиная с ног. Тело просыпается от температурного контраста."}
+{id:"nothing",name:"Ничего не чувствую",emoji:"⬜",triggers:["ничего","пустота","не знаю","нормально","никак","всё равно","онемела","как робот","не чувствую","нет ничего","пусто","безразличие","не могу почувствовать","заморожена","пустая","отключилась","нет сил чувствовать","устала"],short:"Ничего не чувствовать — это тоже чувство. Это защита психики когда боли было слишком много.",body:"Тело как будто далеко. Движения механические. Нет ни радости ни боли. Иногда лёгкое онемение.",philosophy:"Эмоциональная анестезия — не поломка. Это Воля которая выключила боль чтобы выжить. Она включится снова — когда почувствует себя в безопасности.",practice:{name:"Разбудить тело",steps:["Потри ладони друг о друга сильно — 20 секунд","Положи тёплые ладони на лицо","Почувствуй тепло — это контакт","Спроси: «Где в теле хоть что-то есть?»"]},stuck:"Холодная вода на запястья или контрастный душ начиная с ног. Тело просыпается от температурного контраста."},
+{id:"apathy",name:"Апатия",emoji:"🌫",triggers:["апатия","безразличие","пустота","ничего не хочу","свинец","нет сил","всё равно","лень","тяжело","не могу встать","не хочу","зачем","не вижу смысла","холод во всём теле","отсутствие желаний"],short:"Апатия — не лень. Это Воля которая объявила забастовку. Сигнал: «Больше не могу».",body:"Всё тело, особенно конечности. Ощущения: свинец, пустота, холод, отсутствие желаний.",philosophy:"Апатия — защитная реакция на стресс. Квиетив — момент когда Познание увидело бесполезность борьбы. Это не конец — это пауза перед разворотом.",practice:{name:"Разрешение",steps:["Ляг на спину, раскинь руки и ноги","Два медленных вдоха","Скажи вслух: «Я разрешаю себе ничего не хотеть»","Полежи ещё 3 минуты — просто разрешь себе быть пустой"]},stuck:"Скажи вслух: «Я разрешаю себе быть пустой. Это нормально». Не заставляй себя хотеть — просто позволь этому быть."},
+{id:"resentment",name:"Обида",emoji:"🌊",triggers:["обида","обидно","несправедливость","горечь","нечестно","меня не ценят","меня не видят","ком в горле","обидели","предали","разочарование","ожидала","не так","не оценили"],short:"Обида — это несбывшееся ожидание. Другой не сделал то что ты ожидала — и это больно.",body:"Горло (ком), грудь, диафрагма. Ощущение горечи, сдавленности, желание чтобы тебя наконец услышали.",philosophy:"Обида — смесь гнева и печали. Она говорит: «Мне было важно что ты сделаешь так» — и другой не знал об этом ожидании.",practice:{name:"Письмо (не отправлять)",steps:["Напиши письмо тому кто обидел — не отправляй","Начни: «Я обижаюсь на тебя за...»","Закончи: «Я отпускаю это потому что...»","Просто запиши — освободи горло от кома"]},stuck:"Скажи вслух: «Мне было важно...» и закончи предложение. Назвать что было важно — уже половина освобождения."},
+{id:"envy",name:"Зависть",emoji:"🌿",triggers:["зависть","завидую","несправедливо у других","хочу как у неё","жжение","скручивание","горечь","почему не я","у неё есть","мне не дано","она может а я нет"],short:"Зависть — компас желаний. Она показывает что ты хочешь на самом деле но боишься признать.",body:"Живот (скручивание), челюсть, грудь. Жжение, горечь, напряжение.",philosophy:"Зависть — это Воля которая видит чужое и чувствует свою неполноценность. Но за каждой завистью прячется живое желание — которое можно услышать.",practice:{name:"Компас желания",steps:["Запиши: «Я завидую...»","Спроси: «Чему именно я завидую — не вещи а ощущению?»","Запиши это ощущение: свобода, признание, покой, любовь?","Это желание — твоё. Без стыда"]},stuck:"Спроси себя: «Что это говорит о моём собственном желании?» Запиши желание без стыда и слова «но»."},
+{id:"joy",name:"Радость",emoji:"☀️",triggers:["радость","счастье","тепло","свет","лёгкость","хорошо","приятно","удовольствие","улыбаюсь","смеюсь","рада","хорошее настроение","весело","тепло в груди","легко на душе"],short:"Радость — краткий миг когда Воля умолкает и ты становишься чистым созерцанием. Позволь ей быть.",body:"Грудь (тепло и расширение), лицо (улыбка), руки (хочется обнять или взлететь).",philosophy:"Радость — не награда за правильное поведение. Она просто есть. Позволь ей течь — не заслуживай и не объясняй.",practice:{name:"Удержать момент",steps:["Вспомни или заметь что тебя радует прямо сейчас","Положи руку на сердце","Два медленных вдоха","Скажи: «Я разрешаю себе радоваться. Сейчас хорошо»"]},stuck:"Если радость не чувствуется — не заставляй. Просто отметь: «Сейчас радости нет. Это нормально». Она вернётся."},
+{id:"gratitude",name:"Благодарность",emoji:"🌅",triggers:["благодарность","благодарна","спасибо","ценность","тепло в груди","расширение","покой","ценю","дорого","хорошо что есть","повезло","я рада что"],short:"Благодарность — момент когда Эго отступает и признаёт: мир дал больше чем «заслужила».",body:"Грудь (расширение и тепло), горло, глаза (иногда слёзы). Ощущение мягкости и покоя.",philosophy:"Благодарность — не обязанность говорить «спасибо». Это состояние когда видишь ценность того что есть — прямо сейчас, без условий.",practice:{name:"Одна вещь",steps:["Назови одну вещь за которую ты благодарна сегодня","Не большую — любую: тепло чая, чьё-то слово, солнце","Положи руку на грудь","Два вдоха — просто почувствуй это"]},stuck:"Если не находится — не насилуй. Скажи: «Я не чувствую благодарности. И это тоже нормально». Это честность."}
 ];
 
 const STAGES=["семя в земле","первый росток","первый росток","маленький росток","маленький росток","молодой стебель","молодой стебель","первые ветви","первые ветви","первые ветви","молодое деревце","молодое деревце","молодое деревце","крепкое дерево","крепкое дерево","крепкое дерево","бутоны","бутоны","первый цветок 🌸","первый цветок 🌸","дерево в цвету","первое яблоко 🍎"];
@@ -356,23 +364,26 @@ const DAYS=[
 {d:21,w:3,title:"Кто эта женщина",smysl:"Три недели назад ты была набором чужих «должна». Сегодня ты описываешь себя без них.",task:"Перечитай всё что писала за 21 день. Потом ответь: «Кто эта женщина?»",main:{name:"Перечитывание всего пути",tag:"утро",why:"Ты прошла 21 день. Ты — не та женщина что начинала.",steps:["Открой все свои заметки","Читай медленно — всё","Не оценивай — просто наблюдай","Кто эта женщина которая писала всё это?"]},extra:{name:"Портрет без «должна»",tag:"вечер",why:"Три предложения без «надо» и «обязана». Это твой автопортрет.",steps:["Напиши три предложения начиная с «Я — женщина которая...»","Ни одного слова «должна» «надо» «обязана»","Без извинений","Просто — кто она"]},evening:"Кто эта женщина? Одно слово:",p:"Эта женщина —"}
 ];
 // ══════════════════════════════
-// TREE SVG v3.0 (с яблоками)
+// TREE SVG v3.1 (полив + мокрая земля)
 // ══════════════════════════════
-const APPLE_PTS=[[88,205],[102,195],[118,188],[133,182],[148,188],[163,198],[172,208],[122,178],[143,175],[132,170]];
-function tree(progress,wilting,apples,applesWithered){
-  const p=Math.max(0,Math.min(21,progress|0)),w=!!wilting;
-  const ac=Math.min(10,Math.max(0,apples||0)),aw=!!applesWithered;
+function tree(progress,wilting,wetGround){
+  const p=Math.max(0,Math.min(21,progress|0)),w=!!wilting,wet=!!wetGround;
   const lc=w?"#6a8030":"#4aaa50",ld=w?"#4a6020":"#38a040",ll=w?"#8aa040":"#64cc5a",tc="#7a4f2a";
   const wf=w?"filter=\"url(#wf)\"":"",op=t=>p>=t?1:0;
+  // Цвет земли: мокрая — темнее и с синеватым оттенком
+  const groundColor=wet?"#1a3a0a":"#38200e";
+  const groundFill=wet?"#2a5a18":"url(#gr)";
   const buds=[[80,222],[64,216],[174,222],[194,216],[120,170],[140,170],[130,128],[97,185],[163,185]];
   const fls=[[80,220],[64,214],[174,220],[194,214],[120,168],[140,168],[130,126],[97,183],[163,183],[72,223],[188,223],[112,210],[148,210],[100,192],[160,192]];
   const bH=buds.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4" fill="#e8a8c0" opacity=".85"/>`).join("");
   const fH=fls.map(([x,y])=>`<g transform="translate(${x},${y})"><circle cx="0" cy="-5.5" r="3.5" fill="#f5b8cc"/><circle cx="5.2" cy="-2.5" r="3.5" fill="#f5c0d4"/><circle cx="5.2" cy="2.5" r="3.5" fill="#f5b8cc"/><circle cx="0" cy="5.5" r="3.5" fill="#f5c0d4"/><circle cx="-5.2" cy="2.5" r="3.5" fill="#f5b8cc"/><circle cx="-5.2" cy="-2.5" r="3.5" fill="#f5c0d4"/><circle cx="0" cy="0" r="4" fill="#fff5a0"/></g>`).join("");
-  const aH=ac>0?APPLE_PTS.slice(0,ac).map(([x,y])=>`<g><circle cx="${x}" cy="${y}" r="7" fill="${aw?"#8a3020":"#cc2020"}"/><line x1="${x}" y1="${y-7}" x2="${x+2}" y2="${y-11}" stroke="#5a3010" stroke-width="1.5" stroke-linecap="round"/><circle cx="${x+3}" cy="${y-11}" r="2.5" fill="#3a6010" opacity=".8"/></g>`).join(""):"";
+  // Маленькие лужицы на мокрой земле
+  const puddleH=wet?`<ellipse cx="100" cy="328" rx="14" ry="3" fill="#4a8a60" opacity=".5"/><ellipse cx="162" cy="330" rx="10" ry="2.5" fill="#4a8a60" opacity=".4"/>`:"";
   return `<svg viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
 <defs>${w?`<filter id="wf"><feColorMatrix type="saturate" values="0.3"/></filter>`:""}<radialGradient id="gr" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#5a3820"/><stop offset="100%" stop-color="#38200e"/></radialGradient></defs>
-<ellipse cx="130" cy="326" rx="118" ry="14" fill="url(#gr)"/>
-<rect x="0" y="326" width="260" height="20" fill="#38200e"/>
+<ellipse cx="130" cy="326" rx="118" ry="14" fill="${groundFill}" style="transition:fill 1.2s ease"/>
+<rect x="0" y="326" width="260" height="20" fill="${groundColor}" style="transition:fill 1.2s ease"/>
+${puddleH}
 <g opacity="${p===0?1:0}"><ellipse cx="130" cy="320" rx="11" ry="7" fill="#6b4a2a"/><ellipse cx="130" cy="318" rx="6" ry="3.5" fill="#9b7a5a" opacity=".45"/></g>
 <g opacity="${op(1)}" style="transition:opacity 1.5s"><line x1="130" y1="320" x2="130" y2="293" stroke="${lc}" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="121" cy="300" rx="9" ry="4.5" fill="${ll}" transform="rotate(-25 121 300)" ${wf}/><ellipse cx="139" cy="300" rx="9" ry="4.5" fill="${ll}" transform="rotate(25 139 300)" ${wf}/></g>
 <g opacity="${op(3)}" style="transition:opacity 1.5s"><line x1="130" y1="293" x2="130" y2="266" stroke="${lc}" stroke-width="3" stroke-linecap="round"/><ellipse cx="117" cy="276" rx="13" ry="6.5" fill="${ld}" transform="rotate(-28 117 276)" ${wf}/><ellipse cx="143" cy="276" rx="13" ry="6.5" fill="${ld}" transform="rotate(28 143 276)" ${wf}/><ellipse cx="119" cy="262" rx="10" ry="5" fill="${lc}" transform="rotate(-15 119 262)" ${wf}/><ellipse cx="141" cy="262" rx="10" ry="5" fill="${lc}" transform="rotate(15 141 262)" ${wf}/></g>
@@ -383,7 +394,6 @@ function tree(progress,wilting,apples,applesWithered){
 <g opacity="${op(16)}" style="transition:opacity 1.5s"><ellipse cx="112" cy="222" rx="16" ry="9" fill="${lc}" ${wf}/><ellipse cx="148" cy="222" rx="16" ry="9" fill="${lc}" ${wf}/><ellipse cx="100" cy="196" rx="15" ry="8.5" fill="${ld}" ${wf}/><ellipse cx="160" cy="196" rx="15" ry="8.5" fill="${ld}" ${wf}/><ellipse cx="130" cy="149" rx="12" ry="7" fill="${ll}" ${wf}/><ellipse cx="130" cy="142" rx="9" ry="5.5" fill="${lc}" ${wf}/><ellipse cx="130" cy="135" rx="7" ry="4.5" fill="${ld}" ${wf}/></g>
 <g opacity="${op(18)}" style="transition:opacity 1.5s">${bH}</g>
 <g opacity="${op(20)}" style="transition:opacity 2.5s">${fH}</g>
-<g opacity="${ac>0?1:0}" style="transition:opacity 1s">${aH}</g>
 </svg>`;
 }
 
@@ -429,11 +439,20 @@ function dateKey(ts){const n=new Date(ts);return `${n.getFullYear()}-${n.getMont
 // ══════════════════════════════
 // ЯБЛОКИ (физактивность)
 // ══════════════════════════════
-function getAppleCount(){return Math.min(10,S.movements.length);}
-function isApplesWithered(){
+function getWaterCount(){return Math.min(10,S.movements.length);}
+function isWaterWithered(){
   if(!S.movements||S.movements.length===0)return false;
   const last=S.movements[S.movements.length-1].date;
   return (Date.now()-last)>2*86400000;
+}
+function getWaterBonus(){
+  // +0.3 за каждое движение, макс +4 стадии (≈13 поливов)
+  return Math.min(4, S.movements.length * 0.3);
+}
+function isGroundWet(){
+  if(!S.movements||S.movements.length===0)return false;
+  const last=S.movements[S.movements.length-1].date;
+  return (Date.now()-last)<86400000; // мокрая земля сутки после полива
 }
 
 // ══════════════════════════════
@@ -486,10 +505,11 @@ function startTick(){
 // ══════════════════════════════
 function renderHome(){
   const prog=getProgress(),curDay=getCurDay(),wilt=isWilting();
-  const ac=getAppleCount(),aw=isApplesWithered();
+  const waterBonus=getWaterBonus(),wet=isGroundWet();
+  const visualProg=Math.min(21,prog+waterBonus);
   document.getElementById("hname").textContent=S.name||"—";
   document.getElementById("hdnum").textContent=curDay;
-  document.getElementById("mainTree").innerHTML=tree(prog,wilt,ac,aw);
+  document.getElementById("mainTree").innerHTML=tree(visualProg,wilt,wet);
   document.getElementById("pfill").style.width=(prog/21*100)+"%";
   document.getElementById("pnum").textContent=prog+"/21";
   document.getElementById("sname").textContent=STAGES[prog]||"";
@@ -694,7 +714,21 @@ function getPeriodSupport(days,entries,feelingIds){
   if(feelingIds.length===0)return msg+"Продолжай замечать — со временем здесь появятся твои паттерны.";
   const names=feelingIds.map(id=>FEELINGS.find(f=>f.id===id)?.name).filter(Boolean);
   msg+=`Ты встретилась с: ${names.join(", ")}. `;
-  return msg+getSupportTail(feelingIds);
+  msg+=getSupportTail(feelingIds);
+  // Движения за период
+  const cutoff=Date.now()-days*86400000;
+  const mentries=S.movements.filter(m=>m.date>=cutoff);
+  if(mentries.length>0){
+    const grouped={};
+    mentries.forEach(m=>{if(!grouped[m.type])grouped[m.type]=[];grouped[m.type].push(m);});
+    const mvLines=Object.entries(grouped).map(([type,arr])=>{
+      const t=MV_TYPES.find(x=>x.id===type);
+      const notes=arr.filter(m=>m.note).map(m=>m.note).slice(0,2).join(", ");
+      return `${t?.ico||"💧"} ${t?.name||type}${notes?" ("+notes+")":""}`;
+    }).join(", ");
+    msg+=`\n\nДвижение за период: ${mvLines}.`;
+  }
+  return msg;
 }
 function getSupportTail(feelings){
   if(feelings.includes("fear")||feelings.includes("anxiety"))return "Каждый шаг несмотря на тревогу — это настоящая смелость.";
@@ -762,20 +796,34 @@ function renderJSummary(){
   const cutoff=Date.now()-curJPeriod*86400000;
   const fentries=S.feelingsLog.filter(e=>e.date>=cutoff);
   const dentries=Object.values(S.diary).filter(e=>e.savedAt&&e.savedAt>=cutoff&&e.text);
+  const mentries=S.movements.filter(m=>m.date>=cutoff);
   const el=document.getElementById("jsummary");
-  if(fentries.length===0&&dentries.length===0){el.classList.remove("show");return;}
+  if(fentries.length===0&&dentries.length===0&&mentries.length===0){el.classList.remove("show");return;}
   const feelingIds=[...new Set(fentries.map(e=>e.feeling).filter(Boolean))];
-  let msg=`За ${curJPeriod} дней: `;
+  let html="";
+  // Статистика
   const parts=[];
   if(dentries.length>0)parts.push(`${dentries.length} запис${dentries.length===1?"ь":dentries.length<5?"и":"ей"} в дневнике`);
   if(fentries.length>0)parts.push(`${fentries.length} слов${fentries.length===1?"о":fentries.length<5?"а":""} о чувствах`);
-  msg+=parts.join(", ")+". ";
+  if(mentries.length>0)parts.push(`${mentries.length} поливов дерева`);
+  html+=`<div style="margin-bottom:8px">За ${curJPeriod} дней: ${parts.join(", ")}.</div>`;
+  // Поддержка
   if(feelingIds.length>0){
     const names=feelingIds.map(id=>FEELINGS.find(f=>f.id===id)?.name).filter(Boolean);
-    msg+=`Встречались: ${names.join(", ")}. `;
+    html+=`<div style="margin-bottom:8px">Встречались: ${names.join(", ")}. ${getSupportTail(feelingIds)}</div>`;
   }
-  msg+=getSupportTail(feelingIds);
-  el.textContent=msg;el.classList.add("show");
+  // Движения — отдельный блок
+  if(mentries.length>0){
+    const grouped={};
+    mentries.forEach(m=>{if(!grouped[m.type])grouped[m.type]=[];grouped[m.type].push(m);});
+    const mvLines=Object.entries(grouped).map(([type,arr])=>{
+      const t=MV_TYPES.find(x=>x.id===type);
+      const notes=arr.filter(m=>m.note).map(m=>m.note).join(", ");
+      return `${t?.ico||"💧"} ${t?.name||type}${notes?" — "+notes:""}`;
+    }).join(" · ");
+    html+=`<div style="border-top:1px solid var(--brd);margin-top:8px;padding-top:8px;font-size:13px;color:var(--dm)">Движение: ${mvLines}</div>`;
+  }
+  el.innerHTML=html;el.classList.add("show");
 }
 
 // ══════════════════════════════
@@ -790,16 +838,19 @@ const MV_TYPES=[
 function renderMovement(){
   const today=todayKey();
   const todayMoves=S.movements.filter(m=>dateKey(m.date)===today);
-  const ac=getAppleCount(),aw=isApplesWithered();
-  const appleEl=document.getElementById("mvapples");
-  if(ac===0)appleEl.innerHTML="Каждое движение — яблоко на твоём дереве 🍎 Первое движение — первое яблоко.";
-  else if(aw)appleEl.innerHTML=`🍎 ${ac} из 10 яблок. Яблоки темнеют — давно не двигалась. Одно движение — и они снова заалеют.`;
-  else appleEl.innerHTML=`🍎 ${ac} из 10 яблок растут на твоём дереве. Каждое движение добавляет новое.`;
+  const wc=getWaterCount(),withered=isWaterWithered(),wet=isGroundWet();
+  const el=document.getElementById("mvapples");
+  if(wc===0)el.innerHTML="Каждое движение поливает твоё дерево 💧 Первое движение — и земля станет мокрой.";
+  else if(withered)el.innerHTML=`💧 ${wc} поливов всего. Земля пересохла — давно не двигалась. Одно движение — и дерево снова почувствует воду.`;
+  else el.innerHTML=`💧 ${wc} поливов — земля${wet?" ещё влажная":" подсыхает"}. Движение ускоряет рост дерева.`;
 
   document.getElementById("mvgrid").innerHTML=MV_TYPES.map(t=>{
-    const done=todayMoves.some(m=>m.type===t.id);
+    const todayEntry=todayMoves.find(m=>m.type===t.id);
+    const done=!!todayEntry;
+    const note=todayEntry?.note?`<div style="font-size:11px;color:var(--gr);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%">${todayEntry.note}</div>`:"";
     return `<div class="mvbtn${done?" done":""}" onclick="logMovement('${t.id}')">
 <span class="mvico">${t.ico}</span><div class="mvname">${t.name}</div><div class="mvdesc">${t.desc}</div>
+${note}
 <div class="mvcheck${done?" on":""}">${done?`<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`:""}</div></div>`;
   }).join("");
   renderMvWeek();
@@ -807,24 +858,61 @@ function renderMovement(){
 function logMovement(type){
   const t=MV_TYPES.find(x=>x.id===type);if(!t)return;
   const today=todayKey();
-  const alreadyToday=S.movements.some(m=>m.type===type&&dateKey(m.date)===today);
-  if(alreadyToday){
-    document.getElementById("mbox").innerHTML=`<div class="mpad"><div class="mtit">${t.ico} ${t.name}</div><div class="mtxt">Уже отмечено сегодня. Хочешь добавить ещё одно?</div><div class="mact"><button class="btnp" onclick="addMovement('${type}');closeModal()" style="max-width:none">Добавить ещё</button><button class="btns" onclick="closeModal()">Отмена</button></div></div>`;
-    document.getElementById("modal").classList.add("open");
-    return;
-  }
-  addMovement(type);
+  const existing=S.movements.filter(m=>m.type===type&&dateKey(m.date)===today);
+  const lastEntry=existing[existing.length-1];
+  const currentNote=lastEntry?.note||"";
+  const hasDone=existing.length>0;
+
+  document.getElementById("mbox").innerHTML=`<div class="mpad">
+<div class="mtit">${t.ico} ${t.name}</div>
+<div class="mtxt" style="margin-bottom:10px">${t.desc}</div>
+<input type="text" class="minp" id="mvnote" placeholder="${t.desc}" value="${currentNote}" maxlength="80" autocomplete="off" spellcheck="false">
+<div class="mact" style="flex-direction:column;gap:8px">
+  <button class="btnp" onclick="saveMovement('${type}')" style="max-width:none">💧 ${hasDone?"Обновить запись":"Сохранить"}</button>
+  ${hasDone?`<button class="btns" onclick="cancelMovement('${type}')" style="border-color:#c04040;color:#c04040">Отменить активность</button>`:""}
+  <button class="btns" onclick="closeModal()">Закрыть</button>
+</div></div>`;
+  document.getElementById("modal").classList.add("open");
+  setTimeout(()=>{const n=document.getElementById("mvnote");if(n)n.focus();},150);
 }
-function addMovement(type){
+function saveMovement(type){
   const t=MV_TYPES.find(x=>x.id===type);
-  S.movements.push({type,label:t.name,date:Date.now()});
-  save();renderMovement();renderHome();if(document.getElementById("ggrid"))renderGarden();
-  const ac=getAppleCount();
-  document.getElementById("celico").textContent="🍎";
-  document.getElementById("celt").textContent=ac===1?"Первое яблоко!":ac===10?"Дерево полно яблок!":"Яблок: "+ac;
-  document.getElementById("celx").textContent=ac===10?"Ты сделала это. Дерево полно плодов движения.":"Движение — питание для твоего дерева. Оно растёт вместе с тобой.";
-  document.getElementById("cel").classList.add("show");
+  const note=document.getElementById("mvnote")?.value.trim()||"";
+  const today=todayKey();
+  // Удаляем предыдущую запись того же типа за сегодня (заменяем)
+  S.movements=S.movements.filter(m=>!(m.type===type&&dateKey(m.date)===today));
+  S.movements.push({type,label:t.name,date:Date.now(),note});
+  save();closeModal();
+  // Анимация капли
+  playDropAnimation(()=>{renderMovement();renderHome();});
 }
+function cancelMovement(type){
+  const today=todayKey();
+  S.movements=S.movements.filter(m=>!(m.type===type&&dateKey(m.date)===today));
+  save();closeModal();renderMovement();renderHome();
+}
+function playDropAnimation(cb){
+  const wrap=document.getElementById("mainTree");if(!wrap)return cb&&cb();
+  const drop=document.createElement("div");
+  drop.className="drop-anim";
+  drop.style.position="absolute";
+  // SVG капли
+  drop.innerHTML=`<svg width="28" height="36" viewBox="0 0 28 36" fill="none">
+<path d="M14 2 Q20 10 24 18 Q28 26 22 30 Q18 34 14 34 Q10 34 6 30 Q0 26 4 18 Q8 10 14 2Z" fill="#4a9ad4" opacity=".85"/>
+<ellipse cx="10" cy="16" rx="3" ry="5" fill="white" opacity=".3" transform="rotate(-20 10 16)"/>
+</svg>`;
+  // Родитель должен быть relative
+  const parent=wrap.parentElement;
+  const old=parent.style.position;
+  parent.style.position="relative";
+  parent.appendChild(drop);
+  drop.addEventListener("animationend",()=>{
+    drop.remove();
+    parent.style.position=old||"";
+    if(cb)cb();
+  });
+}
+function addMovement(type){saveMovement(type);}// совместимость
 function renderMvWeek(){
   const days=[];
   for(let i=6;i>=0;i--){
