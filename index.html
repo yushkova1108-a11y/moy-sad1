@@ -620,8 +620,7 @@ function openTask(day,from){
   document.getElementById("ttit").textContent=dd.title;
   const done=!!S.completed[day],note=S.notes[day]||"";
   document.getElementById("tbody").innerHTML=buildTaskBody(dd,done,note);
-  const narea=document.getElementById("tbody").querySelector(".narea");
-  if(narea)narea.oninput=function(){S.notes[day]=this.value;save();};
+  document.getElementById("tbody").querySelector(".narea").oninput=function(){S.notes[day]=this.value;save();};
   show("t");
 }
 function buildTaskBody(dd,done,note){
@@ -775,7 +774,7 @@ function renderDays(){
       if(done)cls+=" d"+d.w;
       const numClr=isCur?"color:var(--gr);font-weight:900":"color:var(--dm)";
       const badge=isCur?' <span style="font-size:11px;color:var(--gd);font-weight:600">· сегодня</span>':"";
-      html+='<div class="'+cls+'" onclick="openTask('+d.d+',' + "'" + 'd' + "'" + ')">';
+      html+='<div class="'+cls+'" onclick="openTask('+d.d+",'d'"+')">'; 
       html+='<div class="drn" style="'+numClr+'">'+d.d+'</div>';
       html+='<div class="dri"><div class="drt">'+d.title+badge+'</div>';
       html+='<div class="drp">'+preview+'</div></div>';
