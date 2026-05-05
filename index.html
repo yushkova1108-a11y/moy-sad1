@@ -183,7 +183,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 #nav{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--brd);display:none;padding-bottom:var(--sb)}
 #nav.vis{display:flex}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 2px;background:none;border:none;cursor:pointer;gap:3px}
-.ni{font-size:20px;line-height:1}.nl{font-size:8px;letter-spacing:.2px;color:var(--dm);text-transform:uppercase;font-weight:500}
+.ni{font-size:24px;line-height:1}.nl{font-size:9px;letter-spacing:.2px;color:var(--dm);text-transform:uppercase;font-weight:500}
 .nb.act .nl{color:var(--gr);font-weight:700}
 .mbg{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:flex-end;justify-content:center;z-index:100;padding-bottom:var(--sb)}
 .mbg.open{display:flex}
@@ -206,7 +206,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 @keyframes bi{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
 /* Анимация капли полива — фиксированный слой */
 #drop-overlay{position:fixed;inset:0;pointer-events:none;z-index:300;overflow:hidden}
-.drop-svg{position:absolute;left:50%;transform:translateX(-50%);animation:dropFall 1s cubic-bezier(.4,0,.6,1) forwards}
+.drop-svg{position:absolute;left:50%;transform:translateX(-50%);animation:dropFall 2.5s cubic-bezier(.3,0,.5,1) forwards}
 @keyframes dropFall{
   0%  {top:-40px;opacity:1;transform:translateX(-50%) scaleY(1) scaleX(1)}
   75% {top:75vh;opacity:1;transform:translateX(-50%) scaleY(1) scaleX(1)}
@@ -359,6 +359,31 @@ const STAGES=["семя в земле","первый росток","первый
 const WMSGS=["День прошёл без полива. Дерево не умирает — оно ждёт тебя.","Пауза — не провал. Корни держат. Что сегодня забрало твоё время?","Дерево терпеливо. Один маленький шаг — и оно снова пойдёт в рост.","Откат — это информация. Что сейчас требует слишком много твоей воды?","Иногда нужно просто ждать дождя. Дерево знает это лучше нас."];
 const GMSGS=[{i:"🌱",t:"Росток тянется",x:"Ты сделала это. Дерево тебя слышит."},{i:"🍃",t:"Новый лист",x:"Каждое действие — настоящий рост. Не метафора."},{i:"🌿",t:"Ветка крепнет",x:"Смотри как оно растёт. Это ты его растишь."},{i:"🌳",t:"Дерево растёт",x:"Ты здесь. Ты делаешь. Этого достаточно."},{i:"✨",t:"Хорошо",x:"Сегодняшний день посчитан. Он настоящий."}];
 
+// Телесные подсказки для каждого дня — перед полем слова
+const BODY_PROMPTS=[
+  "Положи руку на грудь. Два вдоха. Что сейчас есть в теле — одно слово. Тяжесть? Тепло? Пустота? Не думай — пиши первое что почувствовала.",
+  "После дня наблюдений — что осталось в теле? Усталость от голосов? Злость? Облегчение? Одно слово.",
+  "Ты держала в руках что-то своё. Что отозвалось в теле когда прикоснулась? Тепло? Грусть? Радость?",
+  "Запах нашёл тебя или ты нашла его. Что почувствовало тело — одно слово.",
+  "Ты сделала выбор для себя. Что в теле после этого выбора?",
+  "Ты смотрела на себя без приговора. Что сейчас в теле — одно слово.",
+  "Ты прошла первую неделю. Одно слово — что в теле прямо сейчас.",
+  "Тело двигалось так как хотело. Что оно чувствует сейчас?",
+  "Ты взяла паузу. Что осталось в теле после неё?",
+  "Ты была на улице просто так. Что принесло тело обратно?",
+  "Ты вспомнила что умеешь. Что откликнулось в теле?",
+  "Дело завершено. Что изменилось в теле?",
+  "Ты решила без разрешения. Что в теле от этого?",
+  "Две недели пройдено. Одно слово — что в теле прямо сейчас.",
+  "Ты произнесла правду о себе. Что почувствовало тело?",
+  "Ты смотрела на себя иначе. Что осталось в теле?",
+  "Ты вспомнила свою силу. Что сейчас в теле?",
+  "Ты говорила с собой добро. Что отозвалось в теле?",
+  "Ты нашла то что никуда не ушло. Что в теле сейчас?",
+  "Ты назвала своё богатство вслух. Что почувствовало тело?",
+  "Ты прошла весь путь. Одно слово — что в теле в этот момент."
+];
+
 const DAYS=[
 {d:1,w:1,title:"Рука на груди",smysl:"Мы не начинаем меняться. Мы просто проверяем — есть ли связь между головой и телом. Когда рука лежит на груди и дыхание замедляется, мозг получает сигнал: «Я в безопасности». С этого начинается любое восстановление.",task:"Утром положи руку на грудь. Два медленных вдоха. Одно слово — что есть в теле прямо сейчас?",main:{name:"Три минуты с собой",tag:"утро",why:"Тело знает правду раньше головы. Это просто проверка связи.",steps:["Проснувшись, не вставай сразу","Положи правую руку на грудь, левую — на живот","Закрой глаза. Дыши медленно","3 минуты — просто дышать и замечать что есть"]},extra:{name:"Стоп-слово",tag:"в течение дня",why:"Каждый замеченный «должна» — момент пробуждения. Замеченная программа теряет часть власти.",steps:["Заметь когда в голове звучит «должна» «надо» «обязана»","Про себя скажи: «Стоп. Это не мой голос»","Поставь мысленную галочку — и иди дальше","Вечером — сколько раз заметила?"]},evening:"Что сейчас есть в теле? Одно слово:",p:"Моё слово сегодня:"},
 {d:2,w:1,title:"Считать «должна»",smysl:"Мы не боремся с «должна». Мы учимся видеть их как отдельные объекты а не как себя. Каждая замеченная «программа» теряет часть власти.",task:"Весь день считай «должна» и «надо» в голове. Просто считай — не борись.",main:{name:"Счётчик приказов",tag:"весь день",why:"Пока «должна» не сосчитаны — они управляют тобой незаметно.",steps:["Открой заметки в телефоне или возьми бумагу","Каждый раз когда в голове «я должна...» — ставь палочку","Не оценивай и не борись — только считай","Вечером посмотри на цифру"]},extra:{name:"Чей голос?",tag:"вечер",why:"У каждого «должна» есть источник. Назвать его — значит отнять у приказа часть власти.",steps:["Выбери одну самую громкую «должна» дня","Спроси: «Чей это голос? Мамин? Сестры? Чужой?»","Запиши имя — не чтобы обвинить а чтобы отделить","Это не твой голос. Это эхо."]},evening:"Что осталось в теле после всего этого счёта? Одно слово:",p:"Насчитала «должна»:"},
@@ -390,14 +415,14 @@ function tree(progress,wilting,wetGround){
   const lc=w?"#6a8030":"#4aaa50",ld=w?"#4a6020":"#38a040",ll=w?"#8aa040":"#64cc5a",tc="#7a4f2a";
   const wf=w?"filter=\"url(#wf)\"":"",op=t=>p>=t?1:0;
   // Цвет земли: мокрая — темнее и с синеватым оттенком
-  const groundColor=wet?"#1a3a0a":"#38200e";
-  const groundFill=wet?"#2a5a18":"url(#gr)";
+  const groundColor=wet?"#1e1006":"#38200e";
+  const groundFill=wet?"#2e1a08":"url(#gr)";
   const buds=[[80,222],[64,216],[174,222],[194,216],[120,170],[140,170],[130,128],[97,185],[163,185]];
   const fls=[[80,220],[64,214],[174,220],[194,214],[120,168],[140,168],[130,126],[97,183],[163,183],[72,223],[188,223],[112,210],[148,210],[100,192],[160,192]];
   const bH=buds.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4" fill="#e8a8c0" opacity=".85"/>`).join("");
   const fH=fls.map(([x,y])=>`<g transform="translate(${x},${y})"><circle cx="0" cy="-5.5" r="3.5" fill="#f5b8cc"/><circle cx="5.2" cy="-2.5" r="3.5" fill="#f5c0d4"/><circle cx="5.2" cy="2.5" r="3.5" fill="#f5b8cc"/><circle cx="0" cy="5.5" r="3.5" fill="#f5c0d4"/><circle cx="-5.2" cy="2.5" r="3.5" fill="#f5b8cc"/><circle cx="-5.2" cy="-2.5" r="3.5" fill="#f5c0d4"/><circle cx="0" cy="0" r="4" fill="#fff5a0"/></g>`).join("");
   // Маленькие лужицы на мокрой земле
-  const puddleH=wet?`<ellipse cx="100" cy="328" rx="14" ry="3" fill="#4a8a60" opacity=".5"/><ellipse cx="162" cy="330" rx="10" ry="2.5" fill="#4a8a60" opacity=".4"/>`:"";
+  const puddleH=wet?`<ellipse cx="100" cy="328" rx="14" ry="3" fill="#3a2a1a" opacity=".55"/><ellipse cx="162" cy="330" rx="9" ry="2" fill="#3a2a1a" opacity=".45"/>`:"";
   return `<svg viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
 <defs>${w?`<filter id="wf"><feColorMatrix type="saturate" values="0.3"/></filter>`:""}<radialGradient id="gr" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#5a3820"/><stop offset="100%" stop-color="#38200e"/></radialGradient></defs>
 <ellipse cx="130" cy="326" rx="118" ry="14" fill="${groundFill}" style="transition:fill 1.2s ease"/>
@@ -583,10 +608,25 @@ function buildTaskBody(dd,done,note){
 <button class="showsteps" onclick="toggleSteps('${id}',this)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Как делать</button>
 <div class="techsteps" id="${id}">${t.steps.map((s,i)=>`<div class="steprow"><div class="stepnum">${i+1}</div><div class="steptext">${s}</div></div>`).join("")}</div></div>`;
   }
-  return `<div class="smyslbox">${dd.smysl}</div>${techHTML(dd.main,true)}${techHTML(dd.extra,false)}
-<div class="notesec"><label class="notelbl">${dd.p}</label>
-<textarea class="narea" placeholder="Пиши сюда..." rows="4">${note}</textarea>
-<button class="cbtn${done?" done":""}" id="cbtn" onclick="toggleComplete()"><span id="cbtntxt">${done?"✓ Выполнено — нажми чтобы отменить":"Отметить выполненным"}</span></button></div>`;
+  const bodyPrompt=BODY_PROMPTS[dd.d-1]||"";
+  const bodyBlock='<div style="background:var(--surf);border-left:3px solid var(--gd);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:16px">'
+    +'<div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gd);font-weight:700;margin-bottom:6px">🌿 Телесный срез</div>'
+    +'<div style="font-size:15px;color:var(--tx);line-height:1.65">'+bodyPrompt+'</div>'
+    +'<div style="font-size:12px;color:var(--dm);margin-top:8px">Слово запишешь в вечернем вопросе — после выполнения задания.</div>'
+    +'</div>';
+
+  const reminder=!done
+    ?'<div style="background:rgba(42,94,48,.15);border:1px solid rgba(95,204,102,.3);border-radius:10px;padding:14px;margin-top:12px;font-size:14px;color:var(--tx);line-height:1.55">🌙 <strong>Вечерний вопрос</strong> — после нажатия кнопки появится вопрос: одно слово о том что есть в теле. Оно сохранится в дневнике чувств.</div>'
+    :'<div style="text-align:center;margin-top:10px"><button style="background:none;border:none;color:var(--gr);font-size:14px;cursor:pointer;font-weight:600;padding:8px" onclick="showEveningPrompt()">🌙 Вечерний вопрос</button></div>';
+  return '<div class="smyslbox">'+dd.smysl+'</div>'+techHTML(dd.main,true)+techHTML(dd.extra,false)
+    +'<div class="notesec">'
+    +bodyBlock
+    +'<label class="notelbl">'+dd.p+'</label>'
+    +'<div style="font-size:12px;color:var(--dm);margin-bottom:8px;line-height:1.5">Личная заметка — только для тебя. Сохраняется автоматически.</div>'
+    +'<textarea class="narea" placeholder="Пиши сюда..." rows="4">'+note+'</textarea>'
+    +reminder
+    +'<button class="cbtn'+(done?' done':'')+'\" id=\"cbtn\" onclick=\"toggleComplete()\"><span id=\"cbtntxt\">'+(done?'✓ Выполнено — нажми чтобы отменить':'Отметить выполненным')+'</span></button>'
+    +'</div>';
 }
 function toggleSteps(id,btn){
   const el=document.getElementById(id);el.classList.toggle("open");
@@ -594,6 +634,8 @@ function toggleSteps(id,btn){
     ?`<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 9l-4-4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Скрыть`
     :`<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Как делать`;
 }
+let pendingCelProg=null; // ждёт закрытия вечернего вопроса
+
 function toggleComplete(){
   if(!curTaskDay)return;
   const was=!!S.completed[curTaskDay];
@@ -601,36 +643,55 @@ function toggleComplete(){
     S.completed[curTaskDay]=Date.now();save();
     const cbtn=document.getElementById("cbtn"),ctxt=document.getElementById("cbtntxt");
     if(cbtn)cbtn.classList.add("done");if(ctxt)ctxt.textContent="✓ Выполнено — нажми чтобы отменить";
+    pendingCelProg=getProgress();
+    // Вечерний вопрос ПЕРВЫМ — сразу после нажатия
     showEveningPrompt();
-    setTimeout(()=>{renderHome();renderDays();},150);
+    setTimeout(()=>{renderHome();renderDays();},200);
   }else{
     delete S.completed[curTaskDay];save();
+    pendingCelProg=null;
     const cbtn=document.getElementById("cbtn"),ctxt=document.getElementById("cbtntxt");
     if(cbtn)cbtn.classList.remove("done");if(ctxt)ctxt.textContent="Отметить выполненным";
     renderHome();renderDays();
+    // Перестраиваем тело задания чтобы показать напоминание
+    const dd=DAYS[curTaskDay-1];
+    if(dd){document.getElementById("tbody").innerHTML=buildTaskBody(dd,false,S.notes[curTaskDay]||"");
+      document.getElementById("tbody").querySelector(".narea").oninput=function(){S.notes[curTaskDay]=this.value;save();};}
   }
 }
-function closeTask(){navTo(fromScreen);}
 
 // ══════════════════════════════
 // EVENING PROMPT
 // ══════════════════════════════
 function showEveningPrompt(){
   const dd=DAYS[curTaskDay-1];if(!dd)return;
-  document.getElementById("mbox").innerHTML=`<div class="mpad"><div class="mtit">Вечерний вопрос</div><div class="mtxt">${dd.evening}</div><input type="text" class="minp big" id="eword" placeholder="одно слово" maxlength="30" autocomplete="off" spellcheck="false"><div class="mact"><button class="btnp" onclick="saveEveningWord()" style="max-width:none">Сохранить</button><button class="btns" onclick="closeModal()">Пропустить</button></div></div>`;
+  const alreadyAnswered=S.feelingsLog.some(e=>e.day===curTaskDay);
+  document.getElementById("mbox").innerHTML=`<div class="mpad">
+<div class="mtit">Вечерний вопрос 🌙</div>
+<div class="mtxt" style="margin-bottom:6px">${dd.evening}</div>
+<div style="font-size:13px;color:var(--dm);margin-bottom:14px;line-height:1.5">Напиши одно слово — что сейчас есть в теле или на душе. Оно сохранится в твоём дневнике чувств, и приложение подберёт карточку если узнает состояние.</div>
+<input type="text" class="minp big" id="eword" placeholder="одно слово" maxlength="30" autocomplete="off" spellcheck="false" ${alreadyAnswered?`value="${S.feelingsLog.find(e=>e.day===curTaskDay)?.word||''}"`:""}>
+<div class="mact">
+<button class="btnp" onclick="saveEveningWord()" style="max-width:none">Сохранить слово</button>
+<button class="btns" onclick="closeModal()">Пропустить</button>
+</div></div>`;
   document.getElementById("modal").classList.add("open");
-  setTimeout(()=>{const el=document.getElementById("eword");if(el)el.focus();},150);
-  showCel(getProgress());
+  setTimeout(()=>{const el=document.getElementById("eword");if(el){el.focus();el.select();}},150);
+  // Торжество НЕ показываем здесь — только после сохранения слова
 }
 function saveEveningWord(){
   const inp=document.getElementById("eword");if(!inp)return;
   const word=inp.value.trim().toLowerCase();
-  if(!word){closeModal();return;}
+  const prog=pendingCelProg!==null?pendingCelProg:getProgress();
+  pendingCelProg=null;
+  if(!word){closeModal();showCel(prog);return;}
   const feeling=matchFeeling(word);
-  const entry={date:Date.now(),word,feeling:feeling?feeling.id:null,day:curTaskDay};
-  S.feelingsLog.unshift(entry);save();
-  if(feeling){closeModal();setTimeout(()=>showFeelingCard(feeling),200);}
-  else{closeModal();}
+  S.feelingsLog=S.feelingsLog.filter(e=>e.day!==curTaskDay);
+  S.feelingsLog.unshift({date:Date.now(),word,feeling:feeling?feeling.id:null,day:curTaskDay});
+  save();closeModal();
+  // Сначала праздник, потом карточка чувства
+  showCel(prog);
+  if(feeling)setTimeout(()=>showFeelingCard(feeling),800);
 }
 function matchFeeling(word){
   const w=word.toLowerCase().trim();
@@ -927,7 +988,7 @@ function playDropAnimation(cb){
 <ellipse cx="10" cy="15" rx="3" ry="5" fill="white" opacity=".35" transform="rotate(-20 10 15)"/>
 </svg>`;
     overlay.appendChild(drop);
-    const totalMs=delay+1000;
+    const totalMs=delay+2500;
     setTimeout(()=>{
       drop.remove();
       done++;
@@ -989,7 +1050,14 @@ function addFriend(){
 // MODAL
 // ══════════════════════════════
 function closeMBG(e){if(e.target===document.getElementById("modal"))closeModal();}
-function closeModal(){document.getElementById("modal").classList.remove("open");}
+function closeModal(){
+  document.getElementById("modal").classList.remove("open");
+  // Если был ожидающий праздник (пропустила вопрос) — показываем
+  if(pendingCelProg!==null){
+    const p=pendingCelProg;pendingCelProg=null;
+    setTimeout(()=>showCel(p),200);
+  }
+}
 
 // ══════════════════════════════
 // BOOT
