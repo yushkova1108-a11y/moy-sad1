@@ -44,6 +44,9 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .retbanner{background:rgba(94,60,20,.2);border:1px solid rgba(140,90,30,.5);border-radius:10px;padding:14px 16px;margin:0 16px 8px;font-size:15px;color:#d8b070;line-height:1.5;cursor:pointer;display:none;font-weight:500}
 .retbanner.show{display:flex;align-items:center;gap:10px}
 .retbanner span{flex:1}
+.evbanner{background:rgba(30,50,80,.25);border:1px solid rgba(80,120,180,.4);border-radius:10px;padding:14px 16px;margin:0 16px 8px;font-size:15px;color:#a0c0e8;line-height:1.5;cursor:pointer;display:none;align-items:center;gap:10px;font-weight:500}
+.evbanner.show{display:flex}
+.evbanner span{flex:1}
 .psec{padding:6px 20px 10px}
 .prow{display:flex;align-items:center;gap:12px;margin-bottom:4px}
 .plbl{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--dm);white-space:nowrap;font-weight:600}
@@ -237,6 +240,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 <div class="treewrap" id="mainTree"></div>
 <div class="wmsg" id="wmsg"></div>
 <div class="retbanner" id="retbanner" onclick="goReturnDay()"><span id="rettext"></span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#c8a060" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+<div class="evbanner" id="evbanner" onclick="openEveningFromBanner()"><span id="evtext">🌙 Вечерний вопрос ждёт — заполни вечером</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#a0c0e8" stroke-width="1.5" stroke-linecap="round"/></svg></div>
 <div class="psec">
   <div class="prow"><span class="plbl">Рост</span><div class="pbar"><div class="pfill" id="pfill"></div></div><span class="pnum" id="pnum">0/21</span></div>
   <div class="sname" id="sname">семя в земле</div>
@@ -520,6 +524,12 @@ function navTo(id){
   if(id==="g")renderGarden();
 }
 function goReturnDay(){const d=getPrevIncomplete();if(d)openTask(d,"h");}
+function openEveningFromBanner(){
+  // Открываем задание текущего дня сразу на вечерний вопрос
+  const cur=getCurDay();
+  curTaskDay=cur;
+  showEveningPrompt();
+}
 
 // ══════════════════════════════
 // WELCOME
@@ -566,6 +576,18 @@ function renderHome(){
     rb.classList.add("show");
     document.getElementById("rettext").textContent=`День ${prev} остался незавершённым — вернуться?`;
   }else{rb.classList.remove("show");}
+  // Баннер вечернего вопроса: задание выполнено, а слово ещё не написано
+  const ev=document.getElementById("evbanner");
+  const todayDone=!!S.completed[curDay];
+  const todayAnswered=(S.feelingsLog||[]).some(e=>e.day===curDay);
+  if(ev){
+    if(todayDone&&!todayAnswered){
+      ev.classList.add("show");
+      const h=new Date().getHours();
+      document.getElementById("evtext").textContent=
+        h<17?"🌙 Вечерний вопрос ждёт тебя — вернись вечером":"🌙 Вечерний вопрос — запиши одно слово о теле";
+    }else{ev.classList.remove("show");}
+  }
   const td=DAYS[curDay-1];
   if(td){
     const done=!!S.completed[curDay];
@@ -644,8 +666,9 @@ function toggleComplete(){
     const cbtn=document.getElementById("cbtn"),ctxt=document.getElementById("cbtntxt");
     if(cbtn)cbtn.classList.add("done");if(ctxt)ctxt.textContent="✓ Выполнено — нажми чтобы отменить";
     pendingCelProg=getProgress();
-    // Вечерний вопрос ПЕРВЫМ — сразу после нажатия
-    showEveningPrompt();
+    // Показываем праздник — вечерний вопрос через баннер на главной
+    showCel(pendingCelProg);
+    pendingCelProg=null;
     setTimeout(()=>{renderHome();renderDays();},200);
   }else{
     delete S.completed[curTaskDay];save();
@@ -659,6 +682,7 @@ function toggleComplete(){
       document.getElementById("tbody").querySelector(".narea").oninput=function(){S.notes[curTaskDay]=this.value;save();};}
   }
 }
+function closeTask(){navTo(fromScreen);}
 
 // ══════════════════════════════
 // EVENING PROMPT
